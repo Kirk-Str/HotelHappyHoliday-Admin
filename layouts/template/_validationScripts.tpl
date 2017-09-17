@@ -1,0 +1,2 @@
+<script src="<?php echo Config::get('application_path') .'assets/lib/jquery-validation/dist/jquery.validate.js'; ?>"></script>
+<script src="<?php echo Config::get('application_path') .'assets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js'; ?>"></script>
