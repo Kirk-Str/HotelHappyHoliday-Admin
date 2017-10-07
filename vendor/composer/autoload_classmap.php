@@ -14,6 +14,8 @@ return array(
     'Input' => $baseDir . '/classes/Input.php',
     'PageTemplate' => $baseDir . '/classes/PageTemplate.php',
     'Redirect' => $baseDir . '/classes/Redirect.php',
+    'Request' => $baseDir . '/classes/Request.php',
+    'Reservation' => $baseDir . '/classes/Reservation.php',
     'Room' => $baseDir . '/classes/Room.php',
     'Session' => $baseDir . '/classes/Session.php',
     'Template' => $baseDir . '/classes/Template.php',

@@ -35,6 +35,8 @@ class ComposerStaticInitf53cafaede392927695eca28c32c4e8c
         'Input' => __DIR__ . '/../..' . '/classes/Input.php',
         'PageTemplate' => __DIR__ . '/../..' . '/classes/PageTemplate.php',
         'Redirect' => __DIR__ . '/../..' . '/classes/Redirect.php',
+        'Request' => __DIR__ . '/../..' . '/classes/Request.php',
+        'Reservation' => __DIR__ . '/../..' . '/classes/Reservation.php',
         'Room' => __DIR__ . '/../..' . '/classes/Room.php',
         'Session' => __DIR__ . '/../..' . '/classes/Session.php',
         'Template' => __DIR__ . '/../..' . '/classes/Template.php',

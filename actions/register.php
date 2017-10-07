@@ -41,7 +41,7 @@ if (Input::exists()){
 				'required' => true,
 				'min' => '2',
 				'max' => '50'
-            )
+			)
 		)); 
 		
 			if($validation->passed()){
@@ -63,7 +63,7 @@ if (Input::exists()){
                             'city' => Input::get('city'),
                             'country' => Input::get('country'),
                             'contact_no' => Input::get('contact_no'),
-							'role' => '1',
+							'role' => '2',
 						));
 
 				} catch(Exception $e){

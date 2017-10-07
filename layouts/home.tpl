@@ -14,33 +14,26 @@
         </div>
     </div>
 
-    <form class="reservation-form" action="POST">
-       
-        <h2 class="wow fadeInDown">Welcome to Hotel Happy Holiday in Dover</h2>
-        <h3 class="wow fadeInDown">Enjoy the awe inspiring offers that Holiday&trade; offers. Our visitors expeirence the best of everything!.</h3>
+ 
+    <form class="reservation-form" method="POST" action="./actions/availability.php">
 
-        <div class="reservation-bar wow fadeInDown home-page">
+        <h2 class="wow fadeInDown">Enjoy your tailor made holiday and other special events at Holiday&trade;</h2>
+        <h3 class="wow fadeInDown">Seal the deal & Explore the your world, Today</h3>
+
+        <div class="reservation-bar wow fadeInDown res-page">
             <div class="form-group">
-                <label for="checkIn">Check In</label>
-                <input name="daterange" class="form-control" id="checkIn" type="text" required />
+                <label for="check_in">Check In</label>
+                <input name="daterange" class="form-control" id="check_in" type="text" required />
+                <input type="hidden" name="check_in_h" id="check_in_h"  value="" />
             </div>
             <div class="form-group">
-                <label for="checkOut">Check Out</label>
-                <input name="daterange" class="form-control" id="checkOut" type="text" required />
+                <label for="check_out">Check Out</label>
+                <input name="daterange" class="form-control" id="check_out" type="text" required />
+                <input type="hidden" name="check_out_h" id="check_out_h" value="" />
             </div>
             <div class="form-group">
-                <label for="rooms">Rooms</label>
-                <select id="rooms" class="form-control" name="room" required>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="adult">Adults</label>
-                <select id="adult" class="form-control" name="adult" required>
+                <label for="adults">Adults</label>
+                <select id="adults" class="form-control" name="adults" required>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -90,6 +83,7 @@
         </div>
 
     </form>
+    
 </div>
 <div class="golden-banner">
     <h3>

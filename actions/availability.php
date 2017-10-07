@@ -1,6 +1,14 @@
 <?php
 
+// Include the main class, the rest will be automatically loaded
 require  __DIR__ . '../../vendor/autoload.php';
+
+$check_in = "";
+$check_out = "";
+$nightStay = "";
+$adults = "";
+$children = "";
+$guests = "";
 
 if (Input::exists()){
 
@@ -8,46 +16,58 @@ if (Input::exists()){
 
 		$validate = new Validate();
 		$validation = $validate->check($_POST,array(
-			'start_date' => array(
-				'required' => true
+			'check_in_h' => array(
+				'required' => true,
 			),
-			"end_date" => array(
-				'required' => true
+			"check_out_h" => array(
+				'required' => true,
 			),
 			'adults' => array(
-				'required' => true
+				'required' => true,
 			)
 		)); 
 		
 			if($validation->passed()){
 
-				$reservation = new Booking();
+				$check_in = new DateTime(Input::get('check_in_h'));
+				$check_out = new DateTime(Input::get('check_out_h'));
+				$nightStay = $check_in->diff($check_out);
+				$adults = Input::get('adults');
+				$children = Input::get('children');
+				$guests = sprintf("%s Adult(s) and %s Child(Children)", $adults, $children);
 
-				$salt = Hash::salt(32);
-
-				try{
-
-						$reservation->create(array(
-							'email_id' => Input::get('email_id'),
-							'password' => Hash::make(Input::get('password'), $salt),
-							'salt' => $salt,
-                            'firstname' => Input::get('firstname'),
-                            'lastname' => Input::get('lastname'),
-                            'address_line_one' => Input::get('address_line_one'),
-                            'address_line_two' => Input::get('address_line_two'),
-                            'city' => Input::get('city'),
-                            'country' => Input::get('country'),
-                            'contact_no' => Input::get('contact_no'),
-							'role' => '1',
-						));
-
-				} catch(Exception $e){
-					die($e->getMessage());
-				}
-
-				Session::flash('reservationname', Input::get('firstname'));
-
-				Redirect::to('../welcome.php');
+				$room = new Room();
+				$rows = $room->selectAll();
+			
+				// Create the controller, it is reusable and can render multiple templates
+				$core = new Dwoo\Core();
+			
+				// Load a template file, this is reusable if you want to render multiple times the same template with different data
+				$availability = new Dwoo\Template\File('../layouts/availability.tpl');
+				$footerTemplate = new Dwoo\Template\File('../layouts/template/_footer.tpl');
+				$scriptTemplate = new Dwoo\Template\File('../layouts/template/_scripts.tpl');
+				$validationScriptTemplate = new Dwoo\Template\File('../layouts/template/_validationScripts.tpl');
+				$layoutTemplate = new Dwoo\Template\File('../layouts/template/_Layout.tpl');
+			
+				// Create a data set, this data set can be reused to render multiple templates if it contains enough data to fill them all
+				$confirmationData = new Dwoo\Data();
+				$confirmationData->assign('checkIn', $check_in->format('d-m-Y'));
+				$confirmationData->assign('checkOut', $check_out->format('d-m-Y'));
+				$confirmationData->assign('adults', $adults);
+				$confirmationData->assign('children', $children);
+				$confirmationData->assign('guests', $guests);
+				$confirmationData->assign('suitesList', objectToArray($rows));
+			
+				$validationScriptPage = new Dwoo\Data();
+				$validationScriptPage->assign('validationScripts', $core->get($validationScriptTemplate));
+			
+				$mainPage = new Dwoo\Data();
+				$mainPage->assign('pageTitle', 'Availability');
+				$mainPage->assign('content', $core->get($availability, $confirmationData));
+				$mainPage->assign('footer', $core->get($footerTemplate));
+				$mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));
+			
+				echo $core->get($layoutTemplate, $mainPage);
 
 			} else {
 				foreach($validation->errors() as $error){

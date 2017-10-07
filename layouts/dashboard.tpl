@@ -1,3 +1,9 @@
+<?php
+
+    require '..\vendor\autoload.php';
+
+?>
+
 <div>
     <h3>DASHBOARD</h3>
 </div>
@@ -59,7 +65,7 @@
 
 
 
-<h3>Reservered Records</h3>
+<h3>Occupied Rooms</h3>
 <table class="table table-hover">
     <thead>
         <tr>
@@ -68,18 +74,30 @@
             <th>Room</th>
             <th>Adults</th>
             <th>Children</th>
-            <th>Total Amount</th>
-            <th>Request Status</th>
-        </tr>
-        <tr>
-            <td>25</td>
-            <td>James Bond</td>
-            <td>Delux Super</td>
-            <td>2</td>
-            <td>0</td>
-            <td>1800.00</td>
-            <td>Confirmed</td>
+            <th>Check In</th>
+            <th>Check Out</th>
+            <th>Night Stay(s)</th>
         </tr>
     </thead>
+<?php 
+        $room = new Reservation();
+
+        $rows = $room->listRequests();
+
+        foreach($rows as $row){  
+            echo "<tr>";
+
+                echo "<td>" . $row->id . "</td>";
+                echo "<td>" . $row->firstname . ' ' . $row->lastname  . "</td>";
+                echo "<td>" . $row->room_name . "</td>";
+                echo "<td>" . $row->adults . "</td>";
+                echo "<td>" . $row->children . "</td>";
+                echo "<td>" . $row->check_in . "</td>";
+                echo "<td>" . $row->check_out . "</td>";
+                echo "<td>" . $row->nightstays . "</td>";
+
+            echo "</tr>";
+        }
+?>
 
 </table>

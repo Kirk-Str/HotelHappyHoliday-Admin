@@ -10,20 +10,23 @@ $(function () {
         }
     });
 
-    $('#checkIn').on('apply.daterangepicker', function (ev, picker) {
+    $('#daterange').on('apply.daterangepicker', function (ev, picker) {
         $(this).val(picker.startDate.format('YYYY-MM-DD'));
     });
 
-    $('#checkOut').on('apply.daterangepicker', function (ev, picker) {
+    $('#daterange').on('apply.daterangepicker', function (ev, picker) {
         $(this).val(picker.endDate.format('YYYY-MM-DD'));
     });
 
-
     $('input[name="daterange"]').on('apply.daterangepicker', function (ev, picker) {
 
-        $('#checkOIn').val(picker.endDate.format('YYYY-MM-DD'));
-        $('#checkOut').val(picker.endDate.format('YYYY-MM-DD'));
-        console.log(picker.endDate.format('YYYY-MM-DD'));
+       
+        $('#check_in').val(picker.startDate.format('YYYY-MM-DD'));
+        $('#check_in_h').val(picker.startDate.format('YYYY-MM-DD'));
+        
+        $('#check_out').val(picker.endDate.format('YYYY-MM-DD'));
+        $('#check_out_h').val(picker.endDate.format('YYYY-MM-DD'));
+
     });
 
 });
