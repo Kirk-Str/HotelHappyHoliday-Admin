@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                             <div class="form-group"> 
-                                <label for="lastname" class="col-md-3 control-label">Actual Stay(Nights)</label>
+                                <label for="lastname" class="col-md-3 control-label">Actual Night Stay</label>
                                 <div class="col-md-6">
                                     <input class="form-control" type="text" id="actualStayNights" name="actualStayNights" {$disabled}>
                                 </div>
