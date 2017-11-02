@@ -2,6 +2,20 @@
 // Include the main class, the rest will be automatically loaded
 require '..\vendor\autoload.php';
 
+
+
+//Application Logic in Page
+
+$user = new User();
+
+$isAdminUser = false;
+$userid = Session::exists('user') ? Session::get('user') : '';
+$username = Session::exists('username') ? Session::get('username') : '';
+
+if($user->find($userid)){
+    $isAdminUser = $user->data()->role == 1 ? true : false;
+}
+
 // Create the controller, it is reusable and can render multiple templates
 $core = new Dwoo\Core();
 
@@ -18,6 +32,7 @@ $validationScriptPage->assign('validationScripts', $core->get($validationScriptT
 
 $mainPage = new Dwoo\Data();
 $mainPage->assign('pageTitle', 'Rooms');
+$mainPage->assign('isAdminUser', $isAdminUser);
 $mainPage->assign('content', $core->get($availabilityTemplate));
 $mainPage->assign('footer', $core->get($footerTemplate));
 $mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));

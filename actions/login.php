@@ -1,11 +1,10 @@
 <?php
 
-require __dir__ .'../../vendor/autoload.php';
+require __DIR__ . '../../core/init.php';
 
- $user = new User();
- if ($user->isLoggedIn()){
-	 Redirect::to("../../index.php");
- }
+if($userType == 1){
+    Redirect::to(Config::get('application_path') . 'admin/index.php');
+}
 
  if(Input::exists()){
 
@@ -18,7 +17,6 @@ require __dir__ .'../../vendor/autoload.php';
  			));
 
  		if ($validation->passed()){
- 			$user = new User();
 
  			$remember = (Input::get('remember_me') === 'on') ? true : false;
  			$login = $user->login(Input::get('email_id'), Input::get('password'),$remember);

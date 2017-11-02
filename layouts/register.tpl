@@ -1,7 +1,7 @@
 <h2>Register</h2>
 <div class="row">
     <div class="col-md-10">
-        <form method="POST" action="./actions/register.php" novalidate="novalidate">
+        <form method="POST" action="./actions/registerUser.php" novalidate="novalidate">
         <div class="form-horizontal">
             <h4>Create a new account.</h4>
             <hr>

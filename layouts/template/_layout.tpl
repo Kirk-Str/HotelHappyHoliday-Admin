@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,47 +28,60 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="index.php">HOME</a></li>
-                    <li><a href="reservation.php">RESERVATION</a></li>
-                    <li><a href="suites.php">SUITES</a></li>
-                    <li><a href="meetings.php">MEETINGS</a></li>
-                    <li><a href="loyalty.php">LOYALITY</a></li>
-                    <li><a href="surroundings.php">SURROUNDINGS</a></li>
-                    <li><a href="about.php">ABOUT</a></li>
+                    
+                    {if $userType == 1}
+                     
+                        <li><a href="<?php echo Config::get('application_path') . 'admin/index.php'; ?>">DASHBOARD</a></li>
+                        <li><a href="<?php echo Config::get('application_path') . 'admin/confirmationList.php'; ?>">CONFIRMATION</a></li>
+                        <li><a href="<?php echo Config::get('application_path') . 'admin/rooms.php'; ?>">ROOMS</a></li>
+                        <li><a href="<?php echo Config::get('application_path') . 'admin/offers.php'; ?>">OFFERS</a></li>
+
+                    {else}
+
+                        <li><a href="index.php">HOME</a></li>
+                        <li><a href="reservation.php">RESERVATION</a></li>
+                        <li><a href="suites.php">SUITES</a></li>
+                        <li><a href="meetings.php">MEETINGS</a></li>
+                        <li><a href="loyalty.php">LOYALITY</a></li>
+                        <li><a href="surroundings.php">SURROUNDINGS</a></li>
+                        <li><a href="about.php">ABOUT</a></li>
+
+                    {/if}
+
                 </ul>
+
                 <ul class="nav navbar-nav navbar-right">
 
-                <?php 
+                {if !$username == ''}
 
-                        $user = new User();
-                        if ($user->isLoggedIn()){
-
-                            echo '<li class="dropdown"><span>
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src= "' . Config::get('application_path') . 'assets/images/home/login-layout-avatar.png"' . ' width="50px" height="50px" />
+                    <li class="dropdown">
+                        <span>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img class="avatar-padding" src= "<?php echo Config::get('application_path') . 'assets/images/home/login-layout-avatar.png' ?>" width="50px" height="50px" />
                                 <ul id="login-dp" class="dropdown-menu">
-                                <li>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            
-                                            <br>
+                                    <li>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <br>
                                                 <div class="form-group">
-                                                <label>Hello, </label><br>'?> 
+                                                <label>Hello, </label><br> 
                                                     {$username}
-                                                <?php echo '</div>
+                                                </div>
                                                 <div class="form-group button">
                                                     <div class="help-block text-right"><a href="">Change Password</a></div>
-                                                    <div class="help-block text-right"><a href="./logout.php">Log Out</a></div>
+                                                    <div class="help-block text-right">
+                                                        <a href="<?php echo Config::get('application_path') . 'logout.php' ?>">Log Out</a>
+                                                    </div>
                                                 </div>
-                                           
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            </ul>
-                                </a></span>
-                            </li>';
+                                    </li>
+                                </ul>
+                            </a>
+                        </span>
+                    </li>
 
-                        }else{ ?>
+                {else}
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">LOGIN</a>
@@ -106,11 +119,8 @@
                             </li>
                         </ul>
                     </li>
-
-                <?php } ?>
-
+                    {/if}
                 </ul>
-
             </div>
         </div>
     </div>

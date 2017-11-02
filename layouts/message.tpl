@@ -2,5 +2,5 @@
     {$message}
 </h2>
 <p class="para-b wow fadeInDown">
-    {$subMessage}
+    {$subMessage} {$gotoPage}
 </p>

@@ -6,6 +6,7 @@ class DB{
 			$_query,
 			$_error = false,
 			$_results,
+			$_lastInsertId = 0,
 			$_count = 0;
 
 	private function __construct(){
@@ -33,12 +34,20 @@ class DB{
 					$x++;
 				}
 			}
-			if($this->_query->execute()){
-				$this->_results = $this->_query->fetchAll(PDO::FETCH_OBJ);
-				$this->_count = $this->_query->rowCount();
-			}else{
-				$this->_error = true;
+			try{
+				
+				if($this->_query->execute()){
+					$this->_results = $this->_query->fetchAll(PDO::FETCH_OBJ);
+					$this->_count = $this->_query->rowCount();
+					$this->_lastInsertId = $this->_pdo->lastInsertId();
+				}else{
+					$this->_error = true;
+				}
+				
+			}catch(Exception $ex){
+				var_dump($ex->getMessage());
 			}
+			
 		}
 		return $this;
 	}
@@ -96,9 +105,21 @@ class DB{
 		}
 		return false;
 	}
+
 	public function update($table, $id, $fields){
 		$set = '';
 		$x = 1;
+
+		if(is_array($id)){
+			
+			$updateRecordField = key($id);
+			$updateRecordValue = current($id);
+
+		}else{
+			$updateRecordField = 'id';
+			$updateRecordValue = $id;
+		}
+	
 		foreach($fields as $name => $value){
 			$set .= "{$name} = ?";
 			if($x < count($fields)){
@@ -106,11 +127,16 @@ class DB{
 			}
 			$x++;
 		}
-		$sql = "UPDATE {$table} SET {$set} WHERE id = {$id}";
+		$sql = "UPDATE {$table} SET {$set} WHERE {$updateRecordField} = {$updateRecordValue}";
 		if(!$this->query($sql, $fields)->error()){
 			return true;
 		}
 		return false;
+	}
+
+
+	public function lastInsertId(){
+		return $this->_lastInsertId;
 	}
 	public function results(){
 		return $this->_results;
@@ -123,6 +149,15 @@ class DB{
 	}
 	public function count(){
 		return $this->_count;
+	}
+	public function transactBegin(){
+		$this->_pdo->beginTransaction();
+	}
+	public function transactCommit(){
+		$this->_pdo->commit();
+	}
+	public function transactRollback(){
+		$this->_pdo->rollback();
 	}
 }
 ?>

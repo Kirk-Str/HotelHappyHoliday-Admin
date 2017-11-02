@@ -191,6 +191,9 @@ input[name="daterange"]{
     box-shadow:  0 2px 8px 2px rgba(0,0,0,0.1);
 }
 
+.avatar-padding{
+    margin: 14px;
+}
 
 .navbar-nav > li > a {
     font-size:small;
@@ -461,6 +464,17 @@ h3.para{
 /*.jumbotron input{
     max-width: 130px;
 }*/
+
+
+/*
+
+Tables & Styles
+
+*/
+
+table tr{
+    cursor: hand;
+}
 
 
 /***--------------------------------------------------------------*/

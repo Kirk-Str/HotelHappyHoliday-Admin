@@ -35,3 +35,16 @@ if(Cookie::exists(Config::get('remember/cookie_name')) && !Session::exists(Confi
 	}
 
 }
+
+$username = '';
+$userType = '';
+
+$user = new User();
+$userId = Session::exists('user_id') ? Session::get('user_id') : '';
+$username = Session::exists('username') ? Session::get('username') : '';
+$validUser = $user->find($userId);
+
+if($validUser){
+	$userType = $user->data()->role;
+}
+

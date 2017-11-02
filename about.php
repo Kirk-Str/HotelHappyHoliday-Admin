@@ -1,6 +1,11 @@
 <?php
 // Include the main class, the rest will be automatically loaded
-require 'vendor\autoload.php';
+require __DIR__ . '../core/init.php';
+
+if($userType == 1){
+    Redirect::to(Config::get('application_path') . 'admin/index.php');
+}
+
 
 // Create the controller, it is reusable and can render multiple templates
 $core = new Dwoo\Core();
@@ -21,6 +26,9 @@ $validationScriptPage = new Dwoo\Data();
 $validationScriptPage->assign('validationScripts', $core->get($validationScriptTemplate));
 
 $mainPage = new Dwoo\Data();
+$mainPage->assign('pageTitle', 'About');
+$mainPage->assign('userType', $userType);
+$mainPage->assign('username', strtoupper($username));
 $mainPage->assign('content', $core->get($aboutTemplate, $explorePage));
 $mainPage->assign('footer', $core->get($footerTemplate));
 $mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));

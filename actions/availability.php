@@ -1,11 +1,14 @@
 <?php
 
 // Include the main class, the rest will be automatically loaded
-require  __DIR__ . '../../vendor/autoload.php';
+require __DIR__ . '../../core/init.php';
+
+if($userType == 1){
+    Redirect::to(Config::get('application_path') . 'admin/index.php');
+}
 
 $check_in = "";
 $check_out = "";
-$nightStay = "";
 $adults = "";
 $children = "";
 $guests = "";
@@ -31,7 +34,6 @@ if (Input::exists()){
 
 				$check_in = new DateTime(Input::get('check_in_h'));
 				$check_out = new DateTime(Input::get('check_out_h'));
-				$nightStay = $check_in->diff($check_out);
 				$adults = Input::get('adults');
 				$children = Input::get('children');
 				$guests = sprintf("%s Adult(s) and %s Child(Children)", $adults, $children);
@@ -63,6 +65,8 @@ if (Input::exists()){
 			
 				$mainPage = new Dwoo\Data();
 				$mainPage->assign('pageTitle', 'Availability');
+				$mainPage->assign('userType', $userType);
+				$mainPage->assign('username', strtoupper($username));
 				$mainPage->assign('content', $core->get($availability, $confirmationData));
 				$mainPage->assign('footer', $core->get($footerTemplate));
 				$mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));

@@ -4,17 +4,12 @@
 
 <div class="row block col-md-7">
     <div class="col-md-12  text-center clear-padding">
-        <div class="header"><h4>CHECK-IN CHECK-OUT DETAILS</h4></div>
+        <div class="header"><h4>CHECK-IN AND CHECK-OUT</h4></div>
         <div class="body">
             <div class="row">
                 <div class="col-md-12">
-                    <form method="POST" action="./registerReservation.php" novalidate="novalidate">
-                        <input type="hidden" name="check_in" value="{$checkIn}" />
-                        <input type="hidden" name="check_out" value="{$checkOut}" />
-                        <input type="hidden" name="adults" value="{$adults}" />
-                        <input type="hidden" name="children" value="{$children}" />
-                        <input type="hidden" name="room_id" value="{$roomId}" />
-                        <input type="hidden" name="user_id" value="{$userId}" />
+                    <form method="POST" action="./actions/confirmation.php?requestId={$reservationId}" novalidate="novalidate">
+                        <input type="hidden" name="type" id="type" value="{$type}" />
                         <div class="form-horizontal">
                             <div class="text-danger validation-summary-valid" data-valmsg-summary="true">
                                 <ul>
@@ -41,30 +36,39 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="city" class="col-md-3 control-label">Check In</label>
+                                <label for="actual_adults" class="col-md-3 control-label">Adults</label>
                                 <div class="col-md-6">
-                                        <input name="daterange" class="form-control" id="check_in" type="text" value="{$checkIn}" required />
-                                        <input type="hidden" name="check_in_h" id="check_in_h"  value="" />
+                                    <input class="form-control" type="text" value="{$actualAdults}" id="actual_adults" name="actual_adults" {$disabledAdults}>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="city" class="col-md-3 control-label">Check Out</label>
+                                <label for="actual_children" class="col-md-3 control-label">Children</label>
                                 <div class="col-md-6">
-                                        <input name="daterange" class="form-control" id="check_out" type="text" value="{$checkOut}" required />
-                                        <input type="hidden" name="check_in_h" id="check_in_h"  value="" />
+                                    <input class="form-control" type="text" value="{$actualChildren}" id="actual_children" name="actual_children" {$disabledChildren}>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="check_in_single" class="col-md-3 control-label">Check In</label>
+                                <div class="col-md-6">
+                                    <input name="check_in_single" class="form-control" id="check_in_single" type="text" value="{$actualCheckIn}" {$requiredCheckIn} {$disabledCheckIn}/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="check_out_single" class="col-md-3 control-label">Check Out</label>
+                                <div class="col-md-6">
+                                    <input name="check_out_single" class="form-control" id="check_out_single" type="text" value="{$actualCheckOut}" {$requiredCheckOut} {$disabledCheckOut}/>
                                 </div>
                             </div>
                             <div class="form-group"> 
-                                <label for="lastname" class="col-md-3 control-label">Actual Night Stay(s)</label>
+                                <label for="actualStayNights" class="col-md-3 control-label">Actual Night Stay(s)</label>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" id="actualStayNights" name="actualStayNights" {$disabled}>
+                                    <input class="form-control" type="text" id="actualStayNights" name="actualStayNights" value="{$actualNightStays}" {$disabled}>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="city" class="col-md-3 control-label">Balance To Be Paid</label>
+                                <label for="balance-amount" class="col-md-3 control-label">{$balanceAmountLabel}</label>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="number" value="{$balanceToBePaid}" data-val="false" data-val-required="The Check Out field is required." id="check_out" name="check_out" {$disabled}>
-                                    <span class="text-danger field-validation-valid" data-valmsg-for="check_out" data-valmsg-replace="true"></span>
+                                    <input class="form-control" type="text" value="{$balanceAmount}" data-val="false" data-val-required="The Check Out field is required." id="balance-amount" name="balance-amount" {$disabled}>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -125,7 +129,7 @@
                     <td class="label-1-sub font-weight-bold">{$totalAmount}</td>
                 </tr>
                 <tr>
-                    <td class="label-1" style="width: 200px">Amount To Pay Now: </td>
+                    <td class="label-1" style="width: 200px">Amount Paid: </td>
                     <td class="label-1-sub">{$minPayable}</td>
                 </tr>
                 <tr>

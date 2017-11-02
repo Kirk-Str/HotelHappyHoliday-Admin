@@ -69,6 +69,7 @@ $reservationData->assign('balance', $balance);
 
 $mainPage = new Dwoo\Data();
 $mainPage->assign('pageTitle', 'Rooms');
+$mainPage->assign('isAdminUser', $isAdminUser);
 $mainPage->assign('content', $core->get($reservationdetailTemplate, $reservationData));
 $mainPage->assign('footer', $core->get($footerTemplate));
 $mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));

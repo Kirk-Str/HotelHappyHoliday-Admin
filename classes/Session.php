@@ -23,7 +23,10 @@ class Session {
 		} else {
 			self::put($name, $string);
 		}
-
-		
 	}
+
+	public static function kill(){
+		session_destroy();
+	}
+
 } 

@@ -78,4 +78,16 @@ class Room {
 		return $this->_data;
 	}
 
+	public function transactBegin(){
+		$this->_db->transactBegin();
+	}
+
+	public function transactCommit(){
+		$this->_db->transactCommit();
+	}
+
+	public function transactRollback(){
+		$this->_db->transactRollback();
+	}
+
 }

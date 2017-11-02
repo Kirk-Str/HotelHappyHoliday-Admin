@@ -6,7 +6,7 @@ require '..\vendor\autoload.php';
 $core = new Dwoo\Core();
 
 // Load a template file, this is reusable if you want to render multiple times the same template with different data
-$dashboardTemplate = new Dwoo\Template\File('../layouts/dashboard.tpl');
+$reservationdetailTemplate = new Dwoo\Template\File('../layouts/reservationdetail.tpl');
 $footerTemplate = new Dwoo\Template\File('../layouts/template/_footer.tpl');
 $scriptTemplate = new Dwoo\Template\File('../layouts/template/_scripts.tpl');
 $validationScriptTemplate = new Dwoo\Template\File('../layouts/template/_validationScripts.tpl');
@@ -18,7 +18,8 @@ $validationScriptPage->assign('validationScripts', $core->get($validationScriptT
 
 $mainPage = new Dwoo\Data();
 $mainPage->assign('pageTitle', 'Rooms');
-$mainPage->assign('content', $core->get($dashboardTemplate));
+$mainPage->assign('isAdminUser', $isAdminUser);
+$mainPage->assign('content', $core->get($reservationdetailTemplate));
 $mainPage->assign('footer', $core->get($footerTemplate));
 $mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));
 

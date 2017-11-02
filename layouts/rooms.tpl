@@ -14,7 +14,7 @@
     </form>
 </div>
 
-<table class="table table-hover">
+<table id="room-list" class="table table-hover">
 
     <thead>
         <tr>
@@ -36,21 +36,23 @@
 
     $rows = $room->selectAll();
 
-    foreach($rows as $row){  
-            echo "<tr>";
-                echo "<td>" . $row->room_name . "</td>";
-                echo "<td>" . "</td>";
-                echo "<td>" . $row->total_room . "</td>";
-                echo "<td>" . $row->occupancy . "</td>";
-                echo "<td>" . $row->size . "</td>";
-                echo "<td>" . $row->rate . "</td>";
-                echo "<td>" . $row->caption . "</td>";
-                echo "<td>" . $row->description . "</td>";
-                echo '<td><a href="./roomdetail.php?type=edit&id=' . $row->room_id . '">Edit</a></td>';
-                echo '<td><a href="./roomdetail.php?type=delete&id=' . $row->room_id . '">Delete</a></td>';
-            echo "</tr>";
+    if($rows){
+        foreach($rows as $row){  
+                echo "<tr>";
+                    echo '<td id="' . $row->room_id . '"></td>';
+                    echo "<td>" . $row->room_name . "</td>";
+                    echo "<td>" . "</td>";
+                    echo "<td>" . $row->total_room . "</td>";
+                    echo "<td>" . $row->occupancy . "</td>";
+                    echo "<td>" . $row->size . "</td>";
+                    echo "<td>" . $row->rate . "</td>";
+                    echo "<td>" . $row->caption . "</td>";
+                    echo "<td>" . $row->description . "</td>";
+                    echo '<td><a href="./roomdetail.php?type=edit&id=' . $row->room_id . '">Edit</a></td>';
+                    echo '<td><a href="./roomdetail.php?type=delete&id=' . $row->room_id . '">Delete</a></td>';
+                echo "</tr>";
         }
-
+    }
         
 ?>
 

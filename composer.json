@@ -5,8 +5,8 @@
     "autoload": {
         "files": ["core/init.php", 
             "functions/sanitize.php",
-            "functions/objectToArray.php"],
-        
+            "functions/objectToArray.php",
+            "functions/clear.php"],
         "classmap": [
         "classes"
         ]

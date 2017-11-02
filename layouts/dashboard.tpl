@@ -66,7 +66,7 @@
 
 
 <h3>Occupied Rooms</h3>
-<table class="table table-hover">
+<table id="reservation-list" class="table table-hover">
     <thead>
         <tr>
             <th>Reservation Id</th>
@@ -79,25 +79,22 @@
             <th>Night Stay(s)</th>
         </tr>
     </thead>
-<?php 
-        $room = new Reservation();
+        
+{foreach $reservationList row}
 
-        $rows = $room->listRequests();
+    <tr>
 
-        foreach($rows as $row){  
-            echo "<tr>";
+        <td id="{$row.id}"><a href="./confirmation.php?requestId={$row.id}">{$row.id}</a></td>
+        <td>{$row.firstname} {$row.lastname}</td>
+        <td>{$row.room_name}</td>
+        <td>{$row.adults}</td>
+        <td>{$row.children}</td>
+        <td>{$row.check_in}</td>
+        <td>{$row.check_out}</td>
+        <td>{$row.nightstays}</td>
 
-                echo "<td>" . $row->id . "</td>";
-                echo "<td>" . $row->firstname . ' ' . $row->lastname  . "</td>";
-                echo "<td>" . $row->room_name . "</td>";
-                echo "<td>" . $row->adults . "</td>";
-                echo "<td>" . $row->children . "</td>";
-                echo "<td>" . $row->check_in . "</td>";
-                echo "<td>" . $row->check_out . "</td>";
-                echo "<td>" . $row->nightstays . "</td>";
+    </tr>
 
-            echo "</tr>";
-        }
-?>
+{/foreach}
 
 </table>

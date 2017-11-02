@@ -15,19 +15,13 @@ class Request {
 		}
 	}
 
-    public function request($fields=array()){
-
-        if (!$this->_db->insert('request', $fields)){
-            throw new Exception('There was a problem creating the the record.');
-        }
-        
-    }
-
 	public function create($fields=array()){
 
 		if (!$this->_db->insert('request', $fields)){
 			throw new Exception('There was a problem creating the the record.');
 		}
+
+		return $this->_db->lastInsertId();
 		
 	}
 
@@ -73,4 +67,16 @@ class Request {
 		return $this->_data;
 	}
 
+	public function transactBegin(){
+		$this->_db->transactBegin();
+	}
+
+	public function transactCommit(){
+		$this->_db->transactCommit();
+	}
+
+	public function transactRollback(){
+		$this->_db->transactRollback();
+	}
+	
 }

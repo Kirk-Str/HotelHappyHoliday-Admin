@@ -10,6 +10,7 @@ class ComposerStaticInitf53cafaede392927695eca28c32c4e8c
         '25226d3a78c8767bf805b61b0c1243a7' => __DIR__ . '/../..' . '/core/init.php',
         'cb6e10566b8bad640922aba7ecd33ee9' => __DIR__ . '/../..' . '/functions/sanitize.php',
         '5d1441d806e4b906a7a4309631879c3b' => __DIR__ . '/../..' . '/functions/objectToArray.php',
+        'bb00c89d6bfa380e77a8307e500d6eb1' => __DIR__ . '/../..' . '/functions/clear.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -27,7 +28,6 @@ class ComposerStaticInitf53cafaede392927695eca28c32c4e8c
     );
 
     public static $classMap = array (
-        'Booking' => __DIR__ . '/../..' . '/classes/Booking.php',
         'Config' => __DIR__ . '/../..' . '/classes/Config.php',
         'Cookie' => __DIR__ . '/../..' . '/classes/Cookie.php',
         'DB' => __DIR__ . '/../..' . '/classes/DB.php',

@@ -1,7 +1,11 @@
 <?php
 
 // Include the main class, the rest will be automatically loaded
-require  __DIR__ . '../../vendor/autoload.php';
+require __DIR__ . '../../core/init.php';
+
+if($userType == 1){
+    Redirect::to(Config::get('application_path') . 'admin/index.php');
+}
 
 $check_in = "";
 $check_out = "";
@@ -32,26 +36,25 @@ if (Input::exists()){
 
 				$check_in = new DateTime(Input::get('check_in'));
 				$check_out = new DateTime(Input::get('check_out'));
-				$nightStay = $check_in->diff($check_out)->format('%a');
+				$nightStay = $check_in->diff($check_out)->format('%a')+1;
 				$adults = Input::get('adults');
                 $children = Input::get('children');
                 $room_id = Input::get('room_id');
 
                 
 
-                $userId = Session::get('user_id');
-                $user = new User();
-                $user->find($userId);
+                if($validUser){
 
-                $userId = $user->data()->user_id;
-                $firstname = $user->data()->firstname;
-                $lastname = $user->data()->lastname;
-                $email_id = $user->data()->email_id;
-                $address_line_one = $user->data()->address_line_one;
-                $address_line_two = $user->data()->address_line_two;
-                $city = $user->data()->city;
-                $country = $user->data()->country;
-                $contact_no = $user->data()->contact_no;
+                    $firstname = $user->data()->firstname;
+                    $lastname = $user->data()->lastname;
+                    $email_id = $user->data()->email_id;
+                    $address_line_one = $user->data()->address_line_one;
+                    $address_line_two = $user->data()->address_line_two;
+                    $city = $user->data()->city;
+                    $country = $user->data()->country;
+                    $contact_no = $user->data()->contact_no;
+
+                }
 
                 $room = new Room();
                 $roomSelected = $room->find($room_id)->room_name;
@@ -86,11 +89,11 @@ if (Input::exists()){
                 $confirmationData->assign('minPayable', number_format($minPayable, 2));
                 $confirmationData->assign('balanceToBePaid', number_format($balancePayable, 2));
 
-                if($user){
+                if($validUser){
 
                     $confirmationData->assign('userId', $userId);
                     $confirmationData->assign('userType', '2');
-                    $confirmationData->assign('disabled', 'ReadOnly');
+                    $confirmationData->assign('disabled', 'disabled');
                     $confirmationData->assign('buttonName', 'Confirm Reservation');
                     $confirmationData->assign('firstname', $firstname);
                     $confirmationData->assign('lastname', $lastname);
@@ -103,6 +106,7 @@ if (Input::exists()){
 
                 }else{
 
+                    $confirmationData->assign('userId', '');
                     $confirmationData->assign('userType', '3');
                     $confirmationData->assign('disabled', '');
                     $confirmationData->assign('buttonName', 'Confirm Reservation');
@@ -123,6 +127,8 @@ if (Input::exists()){
 
                 $mainPage = new Dwoo\Data();
                 $mainPage->assign('pageTitle', 'Availability');
+                $mainPage->assign('userType', $userType);
+				$mainPage->assign('username', strtoupper($username));
                 $mainPage->assign('content', $core->get($confirmation, $confirmationData));
                 $mainPage->assign('footer', $core->get($footerTemplate));
                 $mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));

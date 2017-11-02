@@ -1,6 +1,16 @@
 <?php
 // Include the main class, the rest will be automatically loaded
-require '..\vendor\autoload.php';
+require __DIR__ . '../../core/init.php';
+
+
+
+if($userType != 1){
+
+    clearMessage();
+    
+    Redirect::to('../message.php');
+
+}
 
 $request_type;
 $pageTitle;
@@ -77,6 +87,8 @@ $validationScriptPage->assign('validationScripts', $core->get($validationScriptT
 
 $mainPage = new Dwoo\Data();
 $mainPage->assign('pageTitle', $pageTitle);
+$mainPage->assign('userType', $userType);
+$mainPage->assign('username', strtoupper($username));
 $mainPage->assign('content', $core->get($roomdetailTemplate, $contentData));
 $mainPage->assign('footer', $core->get($footerTemplate));
 $mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));

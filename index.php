@@ -1,15 +1,12 @@
 <?php
 // Include the main class, the rest will be automatically loaded
-require  __DIR__ . './vendor/autoload.php';
+require __DIR__ . './core/init.php';
 
 //Application Logic in Page
 
-// $user = new User();
-// if (!$user->isLoggedIn()){
-//     Redirect::to("index.php");
-// }
-
-$username = Session::exists('username') ? Session::get('username') : '';
+if($userType == 1){
+    Redirect::to(Config::get('application_path') . 'admin/index.php');
+}
 
 // Create the controller, it is reusable and can render multiple templates
 $core = new Dwoo\Core();
@@ -31,11 +28,11 @@ $validationScriptPage->assign('validationScripts', $core->get($validationScriptT
 
 $mainPage = new Dwoo\Data();
 $mainPage->assign('pageTitle', 'Home');
+$mainPage->assign('userType', $userType);
 $mainPage->assign('username', strtoupper($username));
 $mainPage->assign('content', $core->get($homeTemplate, $explorePage));
 $mainPage->assign('footer', $core->get($footerTemplate));
 $mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));
-
 
 echo $core->get($layoutTemplate, $mainPage);
 

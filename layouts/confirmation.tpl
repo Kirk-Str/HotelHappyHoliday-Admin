@@ -69,13 +69,21 @@
             <div class="row">
                 <div class="col-md-12">
                     <form method="POST" action="./registerReservation.php" novalidate="novalidate">
+
                     <input type="hidden" name="check_in" value="{$checkIn}" />
                     <input type="hidden" name="check_out" value="{$checkOut}" />
                     <input type="hidden" name="adults" value="{$adults}" />
                     <input type="hidden" name="children" value="{$children}" />
                     <input type="hidden" name="room_id" value="{$roomId}" />
+
                     <input type="hidden" name="user_id" value="{$userId}" />
+                    <input type="hidden" name="firstname" value="{$firstname}" />
+                    <input type="hidden" name="lastname" value="{$lastname}" />
+                    <input type="hidden" name="email_id" value="{$emailId}" />
+                    <input type="hidden" name="country" value="{$country}" />
+                    <input type="hidden" name="contact_no" value="{$contactNo}" />
                     <input type="hidden" name="userType" value="{$userType}" />
+
                         <div class="form-horizontal">
                             <div class="text-danger validation-summary-valid" data-valmsg-summary="true">
                                 <ul>
@@ -170,40 +178,39 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="firstname" class="col-md-3 control-label">Card Holder's Name</label>
+                                <label for="card_holders_name" class="col-md-3 control-label">Card Holder's Name</label>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" value="{$firstname}" data-val="true" data-val-required="The Firstname field is required." id="firstname" name="firstname" {$disabled}>
-                                    <span class="text-danger field-validation-valid" data-valmsg-for="firstname" data-valmsg-replace="true"></span>
+                                    <input class="form-control" type="text" data-val="true" data-val-required="The card holders name field is required." id="firstname" name="card_holders_name">
+                                    <span class="text-danger field-validation-valid" data-valmsg-for="card_holders_name" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                             <div class="form-group">
 
-                                <label for="lastname" class="col-md-3 control-label">Card No</label>
+                                <label for="card_no" class="col-md-3 control-label">Card No</label>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" value="{$lastname}" data-val="true" data-val-required="The Lastname field is required." id="lastname" name="lastname" {$disabled}>
-                                    <span class="text-danger field-validation-valid" data-valmsg-for="lastname" data-valmsg-replace="true"></span>
+                                    <input class="form-control" type="text" data-val="true" data-val-required="The card type field is required." id="card_no" name="card_no" >
+                                    <span class="text-danger field-validation-valid" data-valmsg-for="card_no" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="address_line_one" class="col-md-3 control-label">Expiry Month</label>
+                                <label for="expiry_month" class="col-md-3 control-label">Expiry Month</label>
                                 <div class="col-md-6">
-                                <input class="form-control" type="text" value="{$firstname}" data-val="true" data-val-required="The expiry month field is required." id="firstname" name="firstname" {$disabled}>
-                                <span class="text-danger field-validation-valid" data-valmsg-for="firstname" data-valmsg-replace="true"></span>
+                                <input class="form-control" type="text" data-val="true" data-val-required="The expiry month field is required." id="expiry_month" name="expiry_month" >
+                                <span class="text-danger field-validation-valid" data-valmsg-for="expiry_month" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="address_line_two" class="col-md-3 control-label">Expiry Year</label>
+                                <label for="expiry_year" class="col-md-3 control-label">Expiry Year</label>
                                 <div class="col-md-6">
-                                <input class="form-control" type="text" value="{$firstname}" data-val="true" data-val-required="The expiry year field is required." id="firstname" name="firstname" {$disabled}>
-                                <span class="text-danger field-validation-valid" data-valmsg-for="firstname" data-valmsg-replace="true"></span>
+                                <input class="form-control" type="text" data-val="true" data-val-required="The expiry year field is required." id="expiry_year" name="expiry_year" >
+                                <span class="text-danger field-validation-valid" data-valmsg-for="expiry_year" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12">
-              
-                                        <input type="submit" value="{$buttonName}" class="btn btn-info" />
-                                    </div>
+                                    <input type="submit" value="{$buttonName}" class="btn btn-info" />
                                 </div>
+                            </div>
                             <input type="hidden" name="token" value="<?php echo Token::generate();?>">
                         </div>
                     </form>

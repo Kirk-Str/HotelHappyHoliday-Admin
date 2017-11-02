@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Booking' => $baseDir . '/classes/Booking.php',
     'Config' => $baseDir . '/classes/Config.php',
     'Cookie' => $baseDir . '/classes/Cookie.php',
     'DB' => $baseDir . '/classes/DB.php',

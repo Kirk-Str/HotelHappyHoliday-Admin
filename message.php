@@ -1,12 +1,20 @@
 <?php
 // Include the main class, the rest will be automatically loaded
-require  __DIR__ . './vendor/autoload.php';
+require __DIR__ . './core/init.php';
 // Create the controller, it is reusable and can render multiple templates
 
+//Application Logic in Page
 
-$messageTitle = Session::get('message_title');
-$message = Session::get('message');
-$subMessage = Session::get('sub_message');
+
+$titleDefault = 'Not Authorized!';
+$messageDefault = 'Uh-oh, Not Authorized!';
+$subMessageDefault = 'You don\'t have access to admin panel.';
+$gotoPageDefault = '<a href=' . Config::get('application_path') . 'index.php' . '>Go to Homepage</a>';
+
+$messageTitle = Session::exists('message_title') ? Session::get('message_title') : $titleDefault;
+$message = Session::exists('message') ? Session::get('message') : $messageDefault;
+$subMessage = Session::exists('sub_message') ? Session::get('sub_message') : $subMessageDefault;
+$gotoPage = Session::exists('goto_page') ? Session::get('goto_page') : $gotoPageDefault;
 
 $core = new Dwoo\Core();
 
@@ -23,12 +31,14 @@ $explorePage = new Dwoo\Data();
 $explorePage->assign('explore', $core->get($exploreTemplate));
 $explorePage->assign('message', $message);
 $explorePage->assign('subMessage', $subMessage);
+$explorePage->assign('gotoPage', $gotoPage);
 
 $validationScriptPage = new Dwoo\Data();
 $validationScriptPage->assign('validationScripts', $core->get($validationScriptTemplate));
 
 $mainPage = new Dwoo\Data();
 $mainPage->assign('pageTitle', $messageTitle);
+$mainPage->assign('username', strtoupper($username));
 $mainPage->assign('content', $core->get($welcomePageTemplate, $explorePage));
 $mainPage->assign('footer', '');
 $mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));
