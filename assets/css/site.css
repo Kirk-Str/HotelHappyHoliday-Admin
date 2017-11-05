@@ -51,6 +51,9 @@ label{
     padding: 0;
 }
 
+.inline-block{
+    display:inline-block;
+}
 /* Carousel */
 
 .carousel-caption{
@@ -525,4 +528,8 @@ table tr{
 
 .text-left{
     text-align:left !important;
+}
+
+span.validation{
+    color : rgb(238, 91, 91) !important;
 }

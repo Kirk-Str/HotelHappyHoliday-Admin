@@ -4,11 +4,12 @@ require '../../vendor/autoload.php';
 
 if (Input::exists()){
 
-	if(Input::get('type')!= "2"){
+	$reservationId = Input::get('requestId');
 
+	if(Input::get('type')!= "2"){
 		//if(Token::check(Input::get('token'))){
 
-			$reservationId = $_GET['requestId'];
+			
 			$validate = new Validate();
 			$validation = '';
 
@@ -77,7 +78,7 @@ if (Input::exists()){
 
 						$request = new Request();
 						$request->find($reservationId);
-						$request->update(array('approval_status'=> 1, 'approval_timestamp' => date('Y-m-d h:i:s a')), $reservationId);
+						$request->update(array('approval_status' => 1, 'approval_timestamp' => date('Y-m-d h:i:s a')), $reservationId);
 					}
 
 				} catch(Exception $e){
@@ -90,7 +91,15 @@ if (Input::exists()){
 
 				$reservation->transactCommit();
 
-				Redirect::to(Config::get('application_path') . 'admin/index.php');
+
+				Redirect::to(Config::get('application_path') . 'admin/confirmation.php?requestId=' . $reservationId);
+
+				// if(Input::get('type') == "0"){
+				// 	Redirect::to(Config::get('application_path') . 'admin/confirmationList.php?type=opt-filter-occupied');
+				// }else{
+				// 	Redirect::to(Config::get('application_path') . 'admin/confirmationList.php?type=opt-filter-left');
+				// }
+				
 
 			} else {
 				foreach($validation->errors() as $error){
@@ -101,7 +110,8 @@ if (Input::exists()){
 
 	}else{
 
-		Redirect::to(Config::get('application_path') . 'admin/index.php');
+		Redirect::to(Config::get('application_path') . 'admin/confirmation.php?requestId=' . $reservationId);
+		//Redirect::to(Config::get('application_path') . 'admin/index.php?dashboard=new');
 
 	}
 

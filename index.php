@@ -5,7 +5,7 @@ require __DIR__ . './core/init.php';
 //Application Logic in Page
 
 if($userType == 1){
-    Redirect::to(Config::get('application_path') . 'admin/index.php');
+    Redirect::to(Config::get('application_path') . 'admin/index.php?dashboard=new');
 }
 
 // Create the controller, it is reusable and can render multiple templates

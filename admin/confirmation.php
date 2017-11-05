@@ -25,6 +25,8 @@ $reservation = new Reservation();
 
 if($reservation->findReservation(Input::get('requestId'))){
 
+   
+
     $reservationId = $reservation->data()->id;
     $userId = $reservation->data()->user_id;
     $firstname = $reservation->data()->firstname;
@@ -47,6 +49,14 @@ if($reservation->findReservation(Input::get('requestId'))){
     $actualAdults = $reservation->data()->actual_adults;
     $actualChildren = $reservation->data()->actual_children;
 
+    $request = new Request();
+    $request->find($reservationId);
+    $requestTimestamp = new DateTime($request->data()->requestTimestamp);
+    $reservedCheckInDate = new DateTime($request->data()->check_in);
+    $reservedCheckOutDate = new DateTime($request->data()->check_out);
+    $reservedNightStays = $reservedCheckOutDate->diff($reservedCheckInDate)->format('%a')+1;
+
+    
     $actualCheckIn = '';
     $actualCheckOut = '';
     $disabledCheckIn = '';
@@ -90,11 +100,7 @@ if($reservation->findReservation(Input::get('requestId'))){
         $type = 2;
         $checkActionButton = "Ok";
 
-        $request = new Request();
-        $request->find($reservationId);
-        $reservedCheckInDate = new DateTime($request->data()->check_in);
-        $reservedCheckOutDate = new DateTime($request->data()->check_out);
-        $reservedNightStays = $reservedCheckOutDate->diff($reservedCheckInDate)->format('%a')+1;
+     
 
 
         
@@ -138,6 +144,7 @@ if($reservation->findReservation(Input::get('requestId'))){
     $confirmationData->assign('firstname', $firstname);
     $confirmationData->assign('lastname', $lastname);
 
+    $confirmationData->assign('requestedDate', $requestTimestamp->format('d-m-Y'));
     $confirmationData->assign('checkIn', $checkIn->format('d-m-Y'));
     $confirmationData->assign('checkOut', $checkOut->format('d-m-Y'));
     $confirmationData->assign('nightStay', $nightStay);

@@ -148,7 +148,7 @@ if (Input::exists()){
 
 				Session::put('message_title', 'Reservation');
 				Session::put('message', 'Reservation Success!');
-				Session::put('sub_message', 'Your reservation has been successfully registered.');
+				Session::put('sub_message', 'Your reservation Id:' . $requestId . '.</br>Please bring the reservation ID when Check-In.');
 
 				Redirect::to('../message.php');
 

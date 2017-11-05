@@ -13,15 +13,16 @@
         <div class="small-box bg-aqua">
             <div class="inner">
                 <h3>
-                    2
+                    {$newBookings}
                 </h3>
                 <p>
-                    New Booking in Last 7 days
+                    New Bookings
                 </p>
             </div>
             <div class="icon">
                 <i class="ion ion-person-add"></i>
-            </div>                                <a href="#" onclick="more1();" class="small-box-footer">
+            </div>                                
+            <a href="<?php echo $_SERVER["PHP_SELF"] . '?dashboard=new'; ?>" class="small-box-footer">
                 View Details <i class="fa fa-arrow-circle-right"></i>
             </a>
 
@@ -30,15 +31,16 @@
         <div class="small-box bg-green">
             <div class="inner">
                 <h3>
-                    5
+                    {$newOccupiedReservation}
                 </h3>
                 <p>
-                    Booking with Pending Payment
+                    Currently Occupied 
                 </p>
             </div>
             <div class="icon">
                 <i class="ion ion-person-add"></i>
-            </div>                                <a href="#" onclick="more2();" class="small-box-footer">
+            </div> 
+            <a href="<?php echo $_SERVER["PHP_SELF"] . '?dashboard=occupied'; ?>" class="small-box-footer">
                 View Details <i class="fa fa-arrow-circle-right"></i>
             </a>
 
@@ -47,10 +49,10 @@
         <div class="small-box bg-yellow">
             <div class="inner">
                 <h3>
-                    3
+                    {$newOffers}
                 </h3>
                 <p>
-                    Paid Booking
+                    Offers
                 </p>
             </div>
             <div class="icon">
@@ -65,7 +67,7 @@
 
 
 
-<h3>Occupied Rooms</h3>
+<h3>{$dashboardFor}</h3>
 <table id="reservation-list" class="table table-hover">
     <thead>
         <tr>

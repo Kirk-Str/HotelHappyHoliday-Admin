@@ -12,6 +12,7 @@ class DB{
 	private function __construct(){
 		try{
 			$this->_pdo = new PDO('mysql:host='.Config::get('mysql/host').';dbname='.Config::get('mysql/db'), Config::get('mysql/username'), Config::get('mysql/password'));
+			$this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		}catch(PDOException $e){
 			die($e->getMessage());
 		}
@@ -30,7 +31,7 @@ class DB{
 			$x = 1;
 			if(count($params)){
 				foreach($params as $param){
-					$this->_query->bindValue($x, $param);
+					$this->_query->bindValue($x, $param, PDO::PARAM_NULL);
 					$x++;
 				}
 			}
@@ -41,10 +42,11 @@ class DB{
 					$this->_count = $this->_query->rowCount();
 					$this->_lastInsertId = $this->_pdo->lastInsertId();
 				}else{
+					$this->_count = 0;
 					$this->_error = true;
 				}
 				
-			}catch(Exception $ex){
+			}catch(PDOException $ex){
 				var_dump($ex->getMessage());
 			}
 			
@@ -53,22 +55,57 @@ class DB{
 	}
 
 	public function action($action, $table, $where = null){
-		if(count($where) === 3){
-			$operators = array('=', '>', '<', '>=', '<=');
-			$field = $where[0];
-			$operator = $where[1];
-			$value = $where[2];
-			if(in_array($operator, $operators)){
-				$sql = "{$action} FROM {$table} WHERE {$field} {$operator} ?";
-				if(!$this->query($sql, array($value))->error()){
+		
+		$set = '';
+		$param = array();
+		$x = 1;
+
+		if(isset($where)){
+
+			if(is_array($where[0])){
+
+				foreach($where as $args){
+	
+					$set .= $args[0] . ' ' . $args[1] . ' ?';
+					
+					if($x < count($where)){
+						$set .= ' AND ';
+					}
+					$x++;
+
+					array_push($param, $args[2]);
+
+				}
+
+				$sql = "{$action} FROM {$table} WHERE $set";
+				if(!$this->query($sql, $param)->error()){
 					return $this;
 				}
+
+			}else{
+
+				$operators = array('=', '>', '<', '>=', '<=', 'IS', 'IS NOT');
+				$field = $where[0];
+				$operator = $where[1];
+				$value = $where[2];
+				if(in_array($operator, $operators)){
+					$sql = "{$action} FROM {$table} WHERE {$field} {$operator} ? ";
+					if(!$this->query($sql, array($value))->error()){
+						return $this;
+					}
+				}
+
 			}
+
+			
+
 		}else{
+
 			$sql = "{$action} FROM {$table}";
 			if(!$this->query($sql)->error()){
 				return $this;
 			}
+
 		}
 		
 		return false;
@@ -101,6 +138,7 @@ class DB{
 		}
 		$sql = "INSERT INTO {$table} (`" . implode('`, `', $keys) . "`) VALUES ({$values})" ;
 		if(!$this->query($sql, $fields)->error()){
+			$this->_lastInsertId = $this->_pdo->lastInsertId();
 			return true;
 		}
 		return false;

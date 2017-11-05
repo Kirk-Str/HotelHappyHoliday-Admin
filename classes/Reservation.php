@@ -107,9 +107,10 @@ class Reservation {
 
 
 	//listing records based on following parameters
-	//type = Null: Not approved or checked in,
-	//type = 'approved': checked in
-	//type = 'rejected': canceled or didn't show up
+	//type = Null: not checked-in yet,
+	//type = 'occupied': checked in
+	//type = 'left': left the room
+	//type = 'canceled': canceled or didn't show up
 
 	public function listRequests($type = null){
 	
@@ -117,19 +118,37 @@ class Reservation {
 
 			$select = 'SELECT request.id, user.firstname, user.lastname, room.room_name, request.adults, request.children, request.check_in, request.check_out, DATEDIFF(request.check_out, request.check_in) AS nightstays';
 
-			$table = 'request INNER JOIN user ON (request.user_id = user.user_id) INNER JOIN room ON (request.room_id = room.room_id)';
+			$table = 'request INNER JOIN user ON (request.user_id = user.user_id) INNER JOIN room ON (request.room_id = room.room_id) LEFT JOIN room_reservation ON (request.id = room_reservation.request_id)';
 
 			if($type == null){
-				$where = array('approval_status',  '=',  NULL);
-				$data = $this ->_db->action($select, $table);
-			}
-			else if($type === 'approved'){
-				$where = array('approval_status',  '=',  '1');
+
+				$where = array(
+					array('room_reservation.check_in',  'IS',  NULL),
+					array('room_reservation.check_out',  'IS',  NUll));
 				$data = $this ->_db->action($select, $table, $where);
 
-			}else if($type === 'rejected'){
-				$where = array('approval_status',  '=',  '0');
+			}
+			else if($type === 'occupied'){
+
+				$myNull = NULL;
+				$where = array(
+					array('room_reservation.check_in',  'IS NOT', NULL ),
+					array('room_reservation.check_out',  'IS', NULL ));
 				$data = $this ->_db->action($select, $table, $where);
+
+			}else if($type === 'left'){
+
+				$where = array(
+					array('room_reservation.check_in',  'IS NOT',  NULL),
+					array('room_reservation.check_out',  'IS NOT',  NUll));
+				$data = $this ->_db->action($select, $table, $where);
+
+
+			}else if($type === 'canceled'){
+
+				$where = array('request.approval_status',  '=',  '0');
+				$data = $this ->_db->action($select, $table, $where);
+
 			}
 			
 			if($data->count()){
@@ -141,33 +160,47 @@ class Reservation {
 
 	}
 
-	public function listGuests(){
 	
-				$where = null;
-	
-				if($type === null)
-				{
-					$data = $this ->_db->action('request INNER JOIN room_reservation ON (request.request_id = room_reservation.request_id)');
-				}
-				else if($type === 'approved')
-				{
-					$where = array('approval_status',  '=',  '1');
-					$data = $this ->_db->get('request', $where);
-	
-				}else if($type === 'rejected')
-				{
-					$where = array('approval_status',  '=',  '0');
-					$data = $this ->_db->get('request', $where);
-				}
-				
-				if($data->count()){
-					$this->_data = $data->results();
-					return $this->_data;
-				}
-	
-			return false;
-	
-		}
+	//listing records based on following parameters
+	//type = Null: all history,
+	//type = 'new': new requests
+
+	public function listMyRequests($userId, $type = null){
+		
+			$where = null;
+
+			$select = 'SELECT request.id, user.firstname, user.lastname, room.room_name, request.adults, request.children, request.check_in, request.check_out, DATEDIFF(request.check_out, request.check_in) AS nightstays';
+
+			$table = 'request INNER JOIN user ON (request.user_id = user.user_id) INNER JOIN room ON (request.room_id = room.room_id) LEFT JOIN room_reservation ON (request.id = room_reservation.request_id)';
+
+			if($type === 'new'){
+
+				$where = array(
+					array('user.user_id',  '=',  $userId),
+					array('room_reservation.check_in',  'IS',  NULL),
+					array('room_reservation.check_out',  'IS',  NUll));
+				$data = $this ->_db->action($select, $table, $where);
+
+			}
+			else{
+
+				$myNull = NULL;
+				$where = array(
+					array('user.user_id',  '=',  $userId),
+					array('room_reservation.check_in',  'IS NOT', NULL ),
+					array('room_reservation.check_out',  'IS NOT', NULL ));
+				$data = $this ->_db->action($select, $table, $where);
+
+			}
+			
+			if($data->count()){
+				$this->_data = $data->results();
+				return $this->_data;
+			}
+
+		return false;
+
+	}
 
 
 	public function data(){

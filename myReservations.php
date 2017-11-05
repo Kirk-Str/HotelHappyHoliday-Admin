@@ -1,14 +1,14 @@
 <?php
 // Include the main class, the rest will be automatically loaded
-require __DIR__ . '../../core/init.php';
+require __DIR__ . './core/init.php';
 
 
 //Application Logic in Page
-if($userType != 1 || empty($_GET)){
+if($userType == 1 || empty($_GET)){
 
     clearMessage();
     
-    Redirect::to('../message.php');
+    Redirect::to('./message.php');
 
 }
 
@@ -23,25 +23,21 @@ $rows = '';
     //type = 'canceled': canceled or didn't show up
     
 if(Input::get("type") === "opt-filter-new"){
-    $rows = $room->listRequests();
-}elseif(Input::get("type") === "opt-filter-occupied"){
-    $rows = $room->listRequests('occupied');
-}elseif(Input::get("type") === "opt-filter-left"){
-    $rows = $room->listRequests('left');
-}elseif(Input::get("type") === "opt-filter-cancelled"){
-    $rows = $room->listRequests('canceled');
+    $rows = $room->listMyRequests($userId, "new");
+}elseif(Input::get("type") === "opt-filter-history"){
+    $rows = $room->listMyRequests($userId);
 }
 
 // Create the controller, it is reusable and can render multiple templates
 $core = new Dwoo\Core();
 
 // Load a template file, this is reusable if you want to render multiple times the same template with different data
-$confirmationTemplate = new Dwoo\Template\File('../layouts/confirmationList.tpl');
-$footerTemplate = new Dwoo\Template\File('../layouts/template/_footer.tpl');
-$scriptTemplate = new Dwoo\Template\File('../layouts/template/_scripts.tpl');
-$validationScriptTemplate = new Dwoo\Template\File('../layouts/template/_validationScripts.tpl');
+$confirmationTemplate = new Dwoo\Template\File('./layouts/myReservations.tpl');
+$footerTemplate = new Dwoo\Template\File('./layouts/template/_footer.tpl');
+$scriptTemplate = new Dwoo\Template\File('./layouts/template/_scripts.tpl');
+$validationScriptTemplate = new Dwoo\Template\File('./layouts/template/_validationScripts.tpl');
 
-$layoutTemplate = new Dwoo\Template\File('../layouts/template/_Layout.tpl');
+$layoutTemplate = new Dwoo\Template\File('./layouts/template/_Layout.tpl');
 
 // Create a data set, this data set can be reused to render multiple templates if it contains enough data to fill them all
 $validationScriptPage = new Dwoo\Data();

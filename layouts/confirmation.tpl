@@ -91,14 +91,14 @@
                                 </ul>
                             </div>
                             <div class="form-group">
-                                <label for="email_id" class="col-md-3 control-label">Email</label>
+                                <label for="email_id" class="col-md-3 control-label">Email<span class="validation">*</span></label>
                                 <div class="col-md-6">
                                     <input class="form-control" type="email" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." id="email_id" name="email_id" value="{$emailId}" {$disabled}>
                                     <span class="text-danger field-validation-valid" data-valmsg-for="email_id" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="firstname" class="col-md-3 control-label">Firstname</label>
+                                <label for="firstname" class="col-md-3 control-label">Firstname<span class="validation">*</span></label>
                                 <div class="col-md-6">
                                     <input class="form-control" type="text" value="{$firstname}" data-val="true" data-val-required="The Firstname field is required." id="firstname" name="firstname" {$disabled}>
                                     <span class="text-danger field-validation-valid" data-valmsg-for="firstname" data-valmsg-replace="true"></span>
@@ -106,7 +106,7 @@
                             </div>
                             <div class="form-group">
 
-                                <label for="lastname" class="col-md-3 control-label">Lastname</label>
+                                <label for="lastname" class="col-md-3 control-label">Lastname<span class="validation">*</span></label>
                                 <div class="col-md-6">
                                     <input class="form-control" type="text" value="{$lastname}" data-val="true" data-val-required="The Lastname field is required." id="lastname" name="lastname" {$disabled}>
                                     <span class="text-danger field-validation-valid" data-valmsg-for="lastname" data-valmsg-replace="true"></span>
@@ -134,14 +134,14 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="country" class="col-md-3 control-label">Country</label>
+                                <label for="country" class="col-md-3 control-label">Country<span class="validation">*</span></label>
                                 <div class="col-md-6">
                                     <input class="form-control" type="text" value="{$country}" data-val="true" data-val-required="The Country field is required." id="country" name="country" {$disabled}>
                                     <span class="text-danger field-validation-valid" data-valmsg-for="country" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="contact_no" class="col-md-3 control-label">Contact No</label>
+                                <label for="contact_no" class="col-md-3 control-label">Contact No<span class="validation">*</span></label>
                                 <div class="col-md-6">
                                     <input class="form-control" type="text" value="{$contactNo}" data-val="true" data-val-required="The Contact No field is required." id="contact_no" name="contact_no" {$disabled}>
                                     <span class="text-danger field-validation-valid" data-valmsg-for="contact_no" data-valmsg-replace="true"></span>
@@ -168,7 +168,7 @@
                                 </ul>
                             </div>
                             <div class="form-group">
-                                <label for="email_id" class="col-md-3 control-label">Card Type</label>
+                                <label for="email_id" class="col-md-3 control-label">Card Type<span class="validation">*</span></label>
                                 <div class="col-md-6">
                                     <select class="form-control" name="card_type" id="card_type">
                                         <option value="visa">VISA Card</option>
@@ -178,7 +178,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="card_holders_name" class="col-md-3 control-label">Card Holder's Name</label>
+                                <label for="card_holders_name" class="col-md-3 control-label">Card Holder's Name<span class="validation">*</span></label>
                                 <div class="col-md-6">
                                     <input class="form-control" type="text" data-val="true" data-val-required="The card holders name field is required." id="firstname" name="card_holders_name">
                                     <span class="text-danger field-validation-valid" data-valmsg-for="card_holders_name" data-valmsg-replace="true"></span>
@@ -186,23 +186,23 @@
                             </div>
                             <div class="form-group">
 
-                                <label for="card_no" class="col-md-3 control-label">Card No</label>
+                                <label for="card_no" class="col-md-3 control-label">Card No<span class="validation">*</span></label>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" data-val="true" data-val-required="The card type field is required." id="card_no" name="card_no" >
+                                    <input class="form-control" type="number" data-val="true" data-val-required="The card type field is required." id="card_no" name="card_no" >
                                     <span class="text-danger field-validation-valid" data-valmsg-for="card_no" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="expiry_month" class="col-md-3 control-label">Expiry Month</label>
+                                <label for="expiry_month" class="col-md-3 control-label">Expiry Month<span class="validation">*</span></label>
                                 <div class="col-md-6">
-                                <input class="form-control" type="text" data-val="true" data-val-required="The expiry month field is required." id="expiry_month" name="expiry_month" >
+                                <input class="form-control" type="number" data-val="true" data-val-required="The expiry month field is required." id="expiry_month" name="expiry_month" >
                                 <span class="text-danger field-validation-valid" data-valmsg-for="expiry_month" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="expiry_year" class="col-md-3 control-label">Expiry Year</label>
+                                <label for="expiry_year" class="col-md-3 control-label">Expiry Year<span class="validation">*</span></label>
                                 <div class="col-md-6">
-                                <input class="form-control" type="text" data-val="true" data-val-required="The expiry year field is required." id="expiry_year" name="expiry_year" >
+                                <input class="form-control" type="number" data-val="true" data-val-required="The expiry year field is required." id="expiry_year" name="expiry_year" >
                                 <span class="text-danger field-validation-valid" data-valmsg-for="expiry_year" data-valmsg-replace="true"></span>
                                 </div>
                             </div>

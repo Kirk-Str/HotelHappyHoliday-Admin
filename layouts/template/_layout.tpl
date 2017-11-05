@@ -24,15 +24,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="./index.php"><img src="<?php echo Config::get('application_path') .'assets/images/home/Brand Logo.jpg'; ?>" height="78" /></a>
+                <a href="./index.php?dashboard=new"><img src="<?php echo Config::get('application_path') .'assets/images/home/Brand Logo.jpg'; ?>" height="78" /></a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     
                     {if $userType == 1}
                      
-                        <li><a href="<?php echo Config::get('application_path') . 'admin/index.php'; ?>">DASHBOARD</a></li>
-                        <li><a href="<?php echo Config::get('application_path') . 'admin/confirmationList.php'; ?>">CONFIRMATION</a></li>
+                        <li><a href="<?php echo Config::get('application_path') . 'admin/index.php?dashboard=new'; ?>">DASHBOARD</a></li>
+                        <li><a href="<?php echo Config::get('application_path') . 'admin/confirmationList.php?type=opt-filter-occupied'; ?>">RESERVATIONS</a></li>
                         <li><a href="<?php echo Config::get('application_path') . 'admin/rooms.php'; ?>">ROOMS</a></li>
                         <li><a href="<?php echo Config::get('application_path') . 'admin/offers.php'; ?>">OFFERS</a></li>
 
@@ -68,6 +68,7 @@
                                                     {$username}
                                                 </div>
                                                 <div class="form-group button">
+                                                    {if $userType == 2}<div class="help-block text-right"><a href="./myreservations.php?type=opt-filter-new">My Reservations</a></div>{/if}
                                                     <div class="help-block text-right"><a href="">Change Password</a></div>
                                                     <div class="help-block text-right">
                                                         <a href="<?php echo Config::get('application_path') . 'logout.php' ?>">Log Out</a>

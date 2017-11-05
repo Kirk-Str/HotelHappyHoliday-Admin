@@ -1,5 +1,5 @@
 <div>
-    <h3>CONFIRM RESERVATION</h3>
+    <h3>RESERVATION DETAIL</h3>
 </div>
 
 <div class="row block col-md-7">
@@ -19,50 +19,49 @@
                             <div class="form-group">
                                 <label for="email_id" class="col-md-3 control-label">Reservation Id</label>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" value="{$reservationId}" id="reservation_id" name="reservation_id" {$disabled}>
+                                    <input class="form-control" type="text" value="{$reservationId}" id="reservation-id" name="reservation-id" {$disabled}>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="firstname" class="col-md-3 control-label">Firstname</label>
+                                <label for="email_id" class="col-md-3 control-label">Booked Date:</label>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" value="{$firstname}" id="firstname" name="firstname" {$disabled}>
+                                    <input class="form-control" type="text" value="{$requestedDate}" id="requested-date" name="requested-date" {$disabled}>
                                 </div>
                             </div>
                             <div class="form-group">
-
-                                <label for="lastname" class="col-md-3 control-label">Lastname</label>
+                                <label for="room" class="col-md-3 control-label">Room Booked</label>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" value="{$lastname}" id="lastname" name="lastname" {$disabled}>
+                                    <input class="form-control" type="text" value="{$room}" id="room" name="room" {$disabled}>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="actual_adults" class="col-md-3 control-label">Adults</label>
+                                <label for="adults" class="col-md-3 control-label">Adults</label>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" value="{$actualAdults}" id="actual_adults" name="actual_adults" {$disabledAdults}>
+                                    <input class="form-control" type="text" value="{$adults}" id="adults" name="adults" {$disabledAdults}>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="actual_children" class="col-md-3 control-label">Children</label>
+                                <label for="children" class="col-md-3 control-label">Children</label>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" value="{$actualChildren}" id="actual_children" name="actual_children" {$disabledChildren}>
+                                    <input class="form-control" type="text" value="{$children}" id="actual_children" name="children" {$disabledChildren}>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="check_in_single" class="col-md-3 control-label">Check In</label>
+                                <label for="check_in" class="col-md-3 control-label">Check In</label>
                                 <div class="col-md-6">
-                                    <input name="check_in_single" class="form-control" id="check_in_single" type="text" value="{$actualCheckIn}" data-val="true" data-val-required="The Check In field is required." {$requiredCheckIn} {$disabledCheckIn}/>
+                                    <input name="check_in" class="form-control" id="check_in" type="text" value="{$checkIn}" {$disabledCheckIn}/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="check_out_single" class="col-md-3 control-label">Check Out</label>
+                                <label for="check_out" class="col-md-3 control-label">Check Out</label>
                                 <div class="col-md-6">
-                                    <input name="check_out_single" data-val="true" data-val-required="The Check Out field is required." class="form-control" id="check_out_single" type="text" value="{$actualCheckOut}" {$requiredCheckOut} {$disabledCheckOut}/>
+                                    <input name="check_out" class="form-control" id="check_out" type="text" value="{$CheckOut}" {$disabledCheckOut}/>
                                 </div>
                             </div>
                             <div class="form-group"> 
-                                <label for="actualStayNights" class="col-md-3 control-label">Actual Night Stay(s)</label>
+                                <label for="stayNights" class="col-md-3 control-label">Night Stay(s)</label>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" id="actualStayNights" name="actualStayNights" value="{$actualNightStays}" {$disabled}>
+                                    <input class="form-control" type="text" id="stayNights" name="stayNights" value="{$nightStays}" {$disabled}>
                                 </div>
                             </div>
                             <div class="form-group">

@@ -51,7 +51,14 @@ $(function () {
             "cancelLabel": 'Clear'
         }
     }, function(start, end, label) {
+        
+        // var roomRent = $('#roomRate').text();
+        // var nightsStay  =  end-start;
+        // var totalRent = nightsStay * totalRent;
+
         $('#check_out_single').val(end.format('YYYY-MM-DD'));
+        //$('#actualStayNights').val(nightsStay);
+        //$('#actualStayNights').val(nightsStay);
     });
 
 
@@ -70,5 +77,7 @@ $(function () {
           location.href="./roomdetail.php?type=edit&id=" + id;
   
       } );
+
+
 
 });
