@@ -10,7 +10,7 @@
     </div>
 </form>
 
-<table id="reservation-list" class="table table-hover">
+<table id="my-reservation-list" class="table table-hover">
 
     <thead>
         <tr>
@@ -28,7 +28,7 @@
 
     <tr>
 
-        <td id="{$row.id}"><a href="./confirmation.php?requestId={$row.id}">{$row.id}</a></td>
+        <td id="{$row.id}"><a href="./myReservationDetail.php?requestId={$row.id}">{$row.id}</a></td>
         <td>{$row.room_name}</td>
         <td>{$row.adults}</td>
         <td>{$row.children}</td>

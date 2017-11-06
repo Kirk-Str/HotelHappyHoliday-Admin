@@ -71,6 +71,13 @@ $(function () {
 
     } );
 
+    $('#my-reservation-list tbody').on( 'click', 'tr', function () {
+        
+          var id = this.cells[0].id;
+          location.href="./myReservationDetail.php?requestId=" + id;
+  
+      } );
+
     $('#room-list tbody').on( 'click', 'tr', function () {
         
           var id = this.cells[0].id;

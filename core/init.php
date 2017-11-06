@@ -33,7 +33,6 @@ if(Cookie::exists(Config::get('remember/cookie_name')) && !Session::exists(Confi
 		$user = new User($hashCheck->first()->user_id);
 		$user ->login();
 	}
-
 }
 
 $username = '';

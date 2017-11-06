@@ -56,9 +56,6 @@ if (Input::exists()){
 
 				try{
 
-
-
-
 					if(Input::get('type') == "0")
 					{
 

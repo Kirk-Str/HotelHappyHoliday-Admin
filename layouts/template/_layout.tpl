@@ -24,7 +24,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="./index.php?dashboard=new"><img src="<?php echo Config::get('application_path') .'assets/images/home/Brand Logo.jpg'; ?>" height="78" /></a>
+                <a href="<?php echo Config::get('application_path') . 'index.php?dashboard=new' ?>"><img src="<?php echo Config::get('application_path') .'assets/images/home/Brand Logo.jpg'; ?>" height="78" /></a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -38,13 +38,13 @@
 
                     {else}
 
-                        <li><a href="index.php">HOME</a></li>
-                        <li><a href="reservation.php">RESERVATION</a></li>
-                        <li><a href="suites.php">SUITES</a></li>
-                        <li><a href="meetings.php">MEETINGS</a></li>
-                        <li><a href="loyalty.php">LOYALITY</a></li>
-                        <li><a href="surroundings.php">SURROUNDINGS</a></li>
-                        <li><a href="about.php">ABOUT</a></li>
+                        <li><a href="<?php echo Config::get('application_path') . 'index.php'?>">HOME</a></li>
+                        <li><a href="<?php echo Config::get('application_path') . 'reservation.php'?>">RESERVATION</a></li>
+                        <li><a href="<?php echo Config::get('application_path') . 'suites.php'?>">SUITES</a></li>
+                        <li><a href="<?php echo Config::get('application_path') . 'meetings.php'?>">MEETINGS</a></li>
+                        <li><a href="<?php echo Config::get('application_path') . 'loyalty.php'?>">LOYALITY</a></li>
+                        <li><a href="<?php echo Config::get('application_path') . 'surroundings.php'?>">SURROUNDINGS</a></li>
+                        <li><a href="<?php echo Config::get('application_path') . 'about.php'?>">ABOUT</a></li>
 
                     {/if}
 

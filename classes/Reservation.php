@@ -8,12 +8,6 @@ class Reservation {
 		$this->_db = DB::getInstance();
 	}
 
-	public function update($fields = array(),$id=null){
-
-		if(!$this->_db->update('request',$id,$fields)){
-			throw new Exception('There was a problem updating the record.');
-		}
-	}
 
     public function create($fields=array()){
 
@@ -22,40 +16,15 @@ class Reservation {
         }
         
 	}
-	
-	//action = 1, approved; action = 0, rejected;
-	public function approveRequest($requestId, $action){
 
-		if($action === 1){
-
-			$request = $this->_id->get('request', array('id', '=', $requestId));
-			
-			$checkIn = $request['check_in'];
-			$checkOut = $request['check_out'];
-			$adults = $request['adults'];
-			$children = $request['children'];
-			$rate =  $request['rate'];
-
-			$fields = array(
-				'request_id' => $requestId,
-				'adults' => $adults,
-				'children' => $children,
-			);
-
-			$request = $this->_db->insert('room_reservation', $fields);
-
-			if (!$this->_db->insert('request', $fields)){
-				throw new Exception('There was a problem creating the the record.');
+	public function update($fields = array(),$id=null){
+		
+				if(!$this->_db->update('request',$id,$fields)){
+					throw new Exception('There was a problem updating the record.');
+				}
 			}
 
-		}else if($action === 0){
 			
-			$this->_id->update('request', $requestId, array('approval_status',  0));
-
-		}
-		
-	}
-
 	public function delete($id){
 
 		if(!$this->_db->delete('request',array('id', '=', $id))){
@@ -64,12 +33,6 @@ class Reservation {
 		
 	}
 	
-	public function checkIn($fields = array(),$id=null){
-
-		if(!$this->_db->update('room_reservation',$id,$fields)){
-			throw new Exception('There was a problem updating.');
-		}
-	}
 
 	public function findRequest($roomId = null){
 
@@ -88,23 +51,34 @@ class Reservation {
 
 	}
 
-	public function findReservation($roomId = null){
+	public function findReservation($requestId, $userId = null){
 
-		if($roomId){
+		$where = 'id';
 
-			$field = 'id';
-			$data = $this ->_db->action('SELECT user.user_id, user.email_id, user.firstname, user.lastname, user.address_line_one, user.address_line_two, user.city, user.country, user.contact_no, request.id, request.requestTimestamp, request.adults, request.children, request.check_in, request.check_out, DATEDIFF(request.check_out, request.check_in) AS nightstays, request.rate,room_reservation.adults AS actual_adults, room_reservation.children AS actual_children, room_reservation.check_in AS actual_check_in, room_reservation.check_out AS actual_check_out, room_reservation.total_amount,room_reservation.deposit_amount, room_reservation.balance_amount, room.room_id, room.room_name' , 'request INNER JOIN user ON (request.user_id = user.user_id) INNER JOIN room ON (request.room_id = room.room_id) INNER JOIN room_reservation ON (request.id = room_reservation.request_id)', array($field, "=", $roomId));
-			
-			if($data->count()){
-				$this->_data = $data->first();
-				return $this->_data;
-			}
+		if($userId){
+			$where = array(
+			array('request_id',  '=',  $requestId),
+			array('user.user_id',  '=',  $userId));
+		}else{
+			$where = array('request_id',  '=',  $requestId);
+		}
+
+		$data = $this ->_db->action('SELECT user.user_id, user.email_id, user.firstname, user.lastname, user.address_line_one, user.address_line_two, user.city, user.country, user.contact_no, request.id, request.requestTimestamp, request.adults, request.children, request.check_in, request.check_out, DATEDIFF(request.check_out, request.check_in) AS nightstays, request.rate,room_reservation.adults AS actual_adults, room_reservation.children AS actual_children, room_reservation.check_in AS actual_check_in, room_reservation.check_out AS actual_check_out, room_reservation.total_amount,room_reservation.deposit_amount, room_reservation.balance_amount, room.room_id, room.room_name' , 'request INNER JOIN user ON (request.user_id = user.user_id) INNER JOIN room ON (request.room_id = room.room_id) INNER JOIN room_reservation ON (request.id = room_reservation.request_id)', $where);
+		
+		if($data->count()){
+			$this->_data = $data->first();
+			return $this->_data;
 		}
 
 		return false;
 
 	}
 
+	public function findAvailableRoom($roomId, $stardDate, $endDate){
+
+		
+
+	}
 
 	//listing records based on following parameters
 	//type = Null: not checked-in yet,
