@@ -19,7 +19,7 @@ class Reservation {
 
 	public function update($fields = array(),$id=null){
 		
-				if(!$this->_db->update('request',$id,$fields)){
+				if(!$this->_db->update('room_reservation',$id,$fields)){
 					throw new Exception('There was a problem updating the record.');
 				}
 			}
@@ -27,43 +27,25 @@ class Reservation {
 			
 	public function delete($id){
 
-		if(!$this->_db->delete('request',array('id', '=', $id))){
+		if(!$this->_db->delete('room_reservation',array('id', '=', $id))){
 			throw new Exception('There was a problem deleting the record.');
 		}
 		
 	}
-	
 
-	public function findRequest($roomId = null){
-
-		if($room){
-
-			$field = 'id';
-			$data = $this ->_db->action('SELECT user.email, user.firstname, user.lastname, user.address_line_one, user.address_line_two, user.city, user.country, user.contact, request.id, request.requestTimestamp, request.adults, request.children, request.check_in, request.check_out, DATEDIFF(request.check_out, request.check_in) AS nightstays', request.total_amount, 'request INNER JOIN user ON (request.user_id = user.user_id) INNER JOIN room ON (request.room_id = room.room_id)', array($field, "=", $roomId));
-			
-			if($data->count()){
-				$this->_data = $data->first();
-				return $this->_data;
-			}
-		}
-
-		return false;
-
-	}
-
-	public function findReservation($requestId, $userId = null){
+	public function find($reservationId, $userId = null){
 
 		$where = 'id';
 
 		if($userId){
 			$where = array(
-			array('request_id',  '=',  $requestId),
+			array('reservation_id',  '=',  $reservationId),
 			array('user.user_id',  '=',  $userId));
 		}else{
-			$where = array('request_id',  '=',  $requestId);
+			$where = array('reservation_id',  '=',  $reservationId);
 		}
 
-		$data = $this ->_db->action('SELECT user.user_id, user.email_id, user.firstname, user.lastname, user.address_line_one, user.address_line_two, user.city, user.country, user.contact_no, request.id, request.requestTimestamp, request.adults, request.children, request.check_in, request.check_out, DATEDIFF(request.check_out, request.check_in) AS nightstays, request.rate,room_reservation.adults AS actual_adults, room_reservation.children AS actual_children, room_reservation.check_in AS actual_check_in, room_reservation.check_out AS actual_check_out, room_reservation.total_amount,room_reservation.deposit_amount, room_reservation.balance_amount, room.room_id, room.room_name' , 'request INNER JOIN user ON (request.user_id = user.user_id) INNER JOIN room ON (request.room_id = room.room_id) INNER JOIN room_reservation ON (request.id = room_reservation.request_id)', $where);
+		$data = $this ->_db->action('SELECT user.user_id, user.email_id, user.firstname, user.lastname, user.address_line_one, user.address_line_two, user.city, user.country, user.contact_no, room_reservation.reservation_id, room_reservation.requestTimestamp, room_reservation.adults, room_reservation.children, room_reservation.check_in, room_reservation.check_out, DATEDIFF(room_reservation.check_out, room_reservation.check_in) AS nightstays, room_reservation.rate,room_reservation.adults_actual, room_reservation.children_actual, room_reservation.check_in_actual, room_reservation.check_out_actual, room_reservation.total_amount,room_reservation.deposit_amount, room_reservation.balance_amount, room.room_id, room.room_name' , 'room_reservation INNER JOIN user ON (room_reservation.user_id = user.user_id) INNER JOIN room ON (room_reservation.room_id = room.room_id)', $where);
 		
 		if($data->count()){
 			$this->_data = $data->first();
@@ -90,15 +72,15 @@ class Reservation {
 	
 			$where = null;
 
-			$select = 'SELECT request.id, user.firstname, user.lastname, room.room_name, request.adults, request.children, request.check_in, request.check_out, DATEDIFF(request.check_out, request.check_in) AS nightstays';
+			$select = 'SELECT room_reservation.reservation_id, user.firstname, user.lastname, room.room_name, room_reservation.adults, room_reservation.children, room_reservation.check_in, room_reservation.check_out, DATEDIFF(room_reservation.check_out, room_reservation.check_in) AS nightstays';
 
-			$table = 'request INNER JOIN user ON (request.user_id = user.user_id) INNER JOIN room ON (request.room_id = room.room_id) LEFT JOIN room_reservation ON (request.id = room_reservation.request_id)';
+			$table = 'room_reservation INNER JOIN user ON (room_reservation.user_id = user.user_id) INNER JOIN room ON (room_reservation.room_id = room.room_id)';
 
 			if($type == null){
 
 				$where = array(
-					array('room_reservation.check_in',  'IS',  NULL),
-					array('room_reservation.check_out',  'IS',  NUll));
+					array('room_reservation.check_in_actual',  'IS',  NULL),
+					array('room_reservation.check_out_actual',  'IS',  NUll));
 				$data = $this ->_db->action($select, $table, $where);
 
 			}
@@ -106,21 +88,21 @@ class Reservation {
 
 				$myNull = NULL;
 				$where = array(
-					array('room_reservation.check_in',  'IS NOT', NULL ),
-					array('room_reservation.check_out',  'IS', NULL ));
+					array('room_reservation.check_in_actual',  'IS NOT', NULL ),
+					array('room_reservation.check_out_actual',  'IS', NULL ));
 				$data = $this ->_db->action($select, $table, $where);
 
 			}else if($type === 'left'){
 
 				$where = array(
-					array('room_reservation.check_in',  'IS NOT',  NULL),
-					array('room_reservation.check_out',  'IS NOT',  NUll));
+					array('room_reservation.check_in_actual',  'IS NOT',  NULL),
+					array('room_reservation.check_out_actual',  'IS NOT',  NUll));
 				$data = $this ->_db->action($select, $table, $where);
 
 
 			}else if($type === 'canceled'){
 
-				$where = array('request.approval_status',  '=',  '0');
+				$where = array('room_reservation.cancel',  '=',  '1');
 				$data = $this ->_db->action($select, $table, $where);
 
 			}
@@ -143,9 +125,9 @@ class Reservation {
 		
 			$where = null;
 
-			$select = 'SELECT request.id, user.firstname, user.lastname, room.room_name, request.adults, request.children, request.check_in, request.check_out, DATEDIFF(request.check_out, request.check_in) AS nightstays';
+			$select = 'SELECT room_reservation.reservation_id, user.firstname, user.lastname, room.room_name, room_reservation.adults, room_reservation.children, room_reservation.check_in, room_reservation.check_out, DATEDIFF(room_reservation.check_out, room_reservation.check_in) AS nightstays';
 
-			$table = 'request INNER JOIN user ON (request.user_id = user.user_id) INNER JOIN room ON (request.room_id = room.room_id) LEFT JOIN room_reservation ON (request.id = room_reservation.request_id)';
+			$table = 'room_reservation INNER JOIN user ON (room_reservation.user_id = user.user_id) INNER JOIN room ON (request.room_id = room.room_id)';
 
 			if($type === 'new'){
 
@@ -176,6 +158,18 @@ class Reservation {
 
 	}
 
+	public function selectAll(){
+	
+			$data = $this ->_db->get('request');
+
+			if($data->count()){
+				$this->_data = $data->results();
+				return $this->_data;
+			}
+
+		return false;
+
+	}
 
 	public function data(){
 		return $this->_data;

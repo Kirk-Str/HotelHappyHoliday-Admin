@@ -69,10 +69,12 @@ if (Input::exists()){
 		
 			if($validation->passed()){
 
+				$reservationId;
 				$check_in = new DateTime(Input::get('check_in'));
 				$check_out = new DateTime(Input::get('check_out'));
 				$nightStay = $check_in->diff($check_out)->format('%a')+1;
 
+				$user = new User();
 				$request = new Request();
 				$reservation = new Reservation();
 				$room = new Room();
@@ -86,7 +88,6 @@ if (Input::exists()){
 				$balancePayable = $totalAmount - $minPayable;
 				
 				try{	
-
 
 					$user->transactBegin();
 
@@ -106,7 +107,7 @@ if (Input::exists()){
 
 					}
 
-					$requestId = $request->create(array(
+					$reservationId = $reservation->create(array(
 						'room_id' => Input::get('room_id'),
 						'user_id' => $userId,
 						'check_in' =>  $check_in->format('Y-m-d'),
@@ -114,15 +115,10 @@ if (Input::exists()){
 						'adults' => Input::get('adults'),
 						'children' => Input::get('children'),
 						'rate' => $rate,
-						'request_type' => 'room'
-					));
-
-					$reservation->create(array(
-						'request_id' => $requestId,
-						'check_in' =>  NULL,
-						'check_out' => NULL,
-						'adults' => Input::get('adults'),
-						'children' => Input::get('children'),
+						'check_in_actual' =>  NULL,
+						'check_out_actual' => NULL,
+						'adults_actual' => Input::get('adults'),
+						'children_actual' => Input::get('children'),
 						'total_amount' => $totalAmount,
 						'deposit_amount' => $minPayable,
 						'balance_amount' => $balancePayable,
@@ -136,8 +132,6 @@ if (Input::exists()){
 					
 					$user->transactCommit();
 					
-					
-
 
 				} catch(Exception $e){
 
@@ -148,14 +142,23 @@ if (Input::exists()){
 
 				Session::put('message_title', 'Reservation');
 				Session::put('message', 'Reservation Success!');
-				Session::put('sub_message', 'Your reservation Id:' . $requestId . '.</br>Please bring the reservation ID when Check-In.');
+				Session::put('sub_message', 'Your reservation #:' . $reservationId . '.</br>Please bring the reservation # when Check-In.');
 
 				Redirect::to('../message.php');
 
 			} else {
+
 				foreach($validation->errors() as $error){
-					echo $error, '<br>';
+					
+					$error .= $error . '</br>';
+					
 				}
+	
+				Session::put('message_title', 'There seems to be a problem :(');
+				Session::put('message', 'There seems to be a problem :(');
+				Session::put('sub_message', $error);
+				Redirect::to('../message.php');
+
 			}
 	//}
 

@@ -32,10 +32,19 @@
                     {if $userType == 1}
                      
                         <li><a href="<?php echo Config::get('application_path') . 'admin/index.php?dashboard=new'; ?>">DASHBOARD</a></li>
-                        <li><a href="<?php echo Config::get('application_path') . 'admin/confirmationList.php?type=opt-filter-occupied'; ?>">RESERVATIONS</a></li>
-                        <li><a href="<?php echo Config::get('application_path') . 'admin/rooms.php'; ?>">ROOMS</a></li>
-                        <li><a href="<?php echo Config::get('application_path') . 'admin/offers.php'; ?>">OFFERS</a></li>
+                        <li><a href="<?php echo Config::get('application_path') . 'admin/confirmationList.php?type=opt-filter-occupied'; ?>">ROOM RESERVATIONS</a></li>
+                        <li><a href="<?php echo Config::get('application_path') . 'admin/RequestList.php?type=opt-filter-new'; ?>">OFFER REQUESTS</a></li>
 
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">MASTERS<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo Config::get('application_path') . 'admin/rooms.php'; ?>">ROOMS</a></li>
+                                <li><a href="<?php echo Config::get('application_path') . 'admin/offers.php'; ?>">OFFERS</a></li>
+                                <li role="presentation" class="divider"></li>
+                                <li><a href="<?php echo Config::get('application_path') . 'admin/users.php?type=opt-filter-all'; ?>">USERS</a></li>
+                            </ul>
+                        </li>
+                        
                     {else}
 
                         <li><a href="<?php echo Config::get('application_path') . 'index.php'?>">HOME</a></li>
@@ -57,7 +66,7 @@
                     <li class="dropdown">
                         <span>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img class="avatar-padding" src= "<?php echo Config::get('application_path') . 'assets/images/home/login-layout-avatar.png' ?>" width="50px" height="50px" />
+                                <img class="avatar-padding" src= "{$avatar}" width="50px" height="50px" />
                                 <ul id="login-dp" class="dropdown-menu">
                                     <li>
                                         <div class="row">
@@ -114,7 +123,7 @@
                                         </form>
                                     </div>
                                     <div class="bottom text-center">
-                                        New here ? <a href="./register.php"><b>Join Us</b></a>
+                                        New here ? <a href="./register.php?type=add"><b>Join Us</b></a>
                                     </div>
                                 </div>
                             </li>

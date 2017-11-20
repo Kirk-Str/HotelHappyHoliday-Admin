@@ -433,14 +433,14 @@ h3.para{
 }
 
 .btn-submit{
-    color: #fff;
+    color: #fff !important;
     font-weight: 600;
     background-color: #D0B877 !important;
     border-color: #e0b244;
 }
 
 .btn-submit:hover{
-    color:#a48334;;
+    color:#a48334 !important;
     background-color: #D0B877 !important;
     border-color: #a48334;
 }

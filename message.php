@@ -5,10 +5,9 @@ require __DIR__ . './core/init.php';
 
 //Application Logic in Page
 
-
-$titleDefault = 'Not Authorized!';
-$messageDefault = 'Uh-oh, Not Authorized!';
-$subMessageDefault = 'You don\'t have access to admin panel.';
+$titleDefault = 'Page not found!';
+$messageDefault = 'Oops, Page not found!';
+$subMessageDefault = 'There seems to be a problem :(';
 $gotoPageDefault = '<a href=' . Config::get('application_path') . 'index.php' . '>Go to Homepage</a>';
 
 $messageTitle = Session::exists('message_title') ? Session::get('message_title') : $titleDefault;
@@ -39,6 +38,7 @@ $validationScriptPage->assign('validationScripts', $core->get($validationScriptT
 $mainPage = new Dwoo\Data();
 $mainPage->assign('pageTitle', $messageTitle);
 $mainPage->assign('username', strtoupper($username));
+$mainPage->assign('avatar', $avatar);
 $mainPage->assign('content', $core->get($welcomePageTemplate, $explorePage));
 $mainPage->assign('footer', '');
 $mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));

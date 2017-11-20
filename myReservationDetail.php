@@ -100,6 +100,7 @@ if($reservation->findReservation(Input::get('requestId'), $userId)){
     $mainPage->assign('pageTitle', 'Availability');
     $mainPage->assign('userType', $userType);
     $mainPage->assign('username', strtoupper($username));
+    $mainPage->assign('avatar', $avatar);
     $mainPage->assign('content', $core->get($confirmation, $myReservationDetail));
     $mainPage->assign('footer', $core->get($footerTemplate));
     $mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));

@@ -41,7 +41,7 @@ class User {
 			$id=$this->data()->user_id; 
 		}
 
-		if(!$this->_db->update('user',$id,$fields)){
+		if(!$this->_db->update('user',$id , $fields)){
 			throw new Exception('There was a problem updating.');
 		}
 	}
@@ -55,16 +55,34 @@ class User {
 		return $this->_db->lastInsertId();
 	}
 
-	public function find($user = null){
+
+	//Function takes argument as UserId, Email Id or specific field level filter
+	public function find($user=null){
 
 		if($user){
-			$field = (is_numeric($user)) ? 'user_id' : 'email_id';
-			$data = $this ->_db->get('user',array($field, "=", $user));
 
-			if($data->count()){
-				$this->_data = $data->first();
-				return true;
+			if(is_array($user)){
+				
+				$data = $this ->_db->get('user', $user);
+
+				if($data->count()){
+					$this->_data = $data->first();
+					return true;
+				}
+
+			}else{
+
+				$field = (is_numeric($user)) ? 'user_id' : 'email_id';
+				
+				$data = $this ->_db->get('user', array($field, '=', $user));
+
+				if($data->count()){
+					$this->_data = $data->first();
+					return $this->_data;
+				}
+
 			}
+
 		}
 
 		return false;
@@ -90,7 +108,9 @@ class User {
 	}
 
 	public function login($emailId = null,$password = null, $remember = false){
+		
 		$user = $this->find($emailId);
+
 		if(!$emailId && !$password && $this->exists()){
 			// log user in 
 			Session::put($this->_sessionName,$this->data()->user_id);
@@ -100,6 +120,7 @@ class User {
 
 		//print_r($this->_data);
 			if ($user){
+
 				if($this->data()->password === Hash::make($password, $this->data()->salt)){
 					
 					Session::put($this->_sessionName,$this->data()->user_id);
@@ -107,11 +128,11 @@ class User {
 					Session::put('user_id',$this->data()->user_id);
 					
 						if($remember){
-							echo 'Remember';
+
 							$hash = Hash::unique();
 							$hashCheck = $this->_db->get('user_session', array('user_id', '=', $this->data()->user_id));
 							if(!$hashCheck->count()){
-									echo 'No count'; echo $this->data()->user_id; //exit;
+									
 								$this->_db->insert('user_session', array(
 									'user_id' => $this->data()->user_id,
 									'hash' => $hash
@@ -124,10 +145,58 @@ class User {
 						return true;
 					//echo 'OK!';
 				}
-				
 			}
-		return false;
+
+			return false;
+
 		}
+
+	}
+
+
+	public function listUsers($type = null){
+
+		$where = null;
+		
+		$select = 'SELECT user_id, email_id, password, salt, firstname, lastname, address_line_one, address_line_two, city, country, contact_no, CASE WHEN role = 1 THEN \'Admin User\' WHEN role = 2 THEN \'Registered User\' WHEN role = 3 THEN \'Non-Registered User\' ELSE \'Deactivated\' END AS user_role,  avatar_image';
+
+		$table = 'user';
+
+		if($type == null){
+
+			$data = $this ->_db->action($select, $table);
+
+		}
+		else if($type === 'registered'){
+
+			$where = array('user.role',  '=',  2);
+			$data = $this ->_db->action($select, $table, $where);
+
+		}else if($type === 'admin'){
+
+			$where = array('user.role',  '=',  1);
+			$data = $this ->_db->action($select, $table, $where);
+
+		}else if($type === 'non-registered'){
+
+			$where = array('user.role',  '=',  3);
+			$data = $this ->_db->action($select, $table, $where);
+
+
+		}
+		else if($type === 'deactivated'){
+
+			$where = array('user.role',  '=',  0);
+			$data = $this ->_db->action($select, $table, $where);
+
+		}
+		
+		if($data->count()){
+			$this->_data = $data->results();
+			return $this->_data;
+		}
+
+		return false;
 
 	}
 

@@ -10,4 +10,6 @@ return array(
     'cb6e10566b8bad640922aba7ecd33ee9' => $baseDir . '/functions/sanitize.php',
     '5d1441d806e4b906a7a4309631879c3b' => $baseDir . '/functions/objectToArray.php',
     'bb00c89d6bfa380e77a8307e500d6eb1' => $baseDir . '/functions/clear.php',
+    '8d8f138dcabbca07be47908a211c902c' => $baseDir . '/functions/data_uri.php',
+    '47966909933e3b6faa57e48a79488aef' => $baseDir . '/functions/generate_img.php',
 );

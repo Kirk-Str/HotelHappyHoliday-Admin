@@ -36,12 +36,13 @@ if(Cookie::exists(Config::get('remember/cookie_name')) && !Session::exists(Confi
 }
 
 $username = '';
-$userType = '';
+$userType = 3;
 
 $user = new User();
 $userId = Session::exists('user_id') ? Session::get('user_id') : '';
 $username = Session::exists('username') ? Session::get('username') : '';
 $validUser = $user->find($userId);
+$avatar = empty($user->data()->avatar_image) ? Config::get('application_path') . 'assets/images/home/login-layout-avatar.png' : 'data:image;base64,' . $user->data()->avatar_image;
 
 if($validUser){
 	$userType = $user->data()->role;

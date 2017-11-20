@@ -97,8 +97,6 @@ class DB{
 
 			}
 
-			
-
 		}else{
 
 			$sql = "{$action} FROM {$table}";
@@ -154,8 +152,10 @@ class DB{
 			$updateRecordValue = current($id);
 
 		}else{
+
 			$updateRecordField = 'id';
 			$updateRecordValue = $id;
+			
 		}
 	
 		foreach($fields as $name => $value){

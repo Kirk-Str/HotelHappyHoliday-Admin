@@ -5,7 +5,7 @@
 ?>
 
 <form class="form form-inline" method="POST" action="." >
-    <h3 class="inline-block">Reservations</h3>
+    <h3 class="inline-block">Room Reservations</h3>
     <div class="form-group pull-right" style="margin-top:30px;">
         <label class="radio-inline" style="margin-right:20px;">
             <input type="radio" onclick=location.href="<?php echo $_SERVER['PHP_SELF'] . '?type=opt-filter-new'; ?>" name="opt-filter" id="opt-filter-new" <?php if (($_GET['type']) == "opt-filter-new") { echo 'checked=checked'; } ?>>New Bookings    
@@ -41,7 +41,7 @@
 
     <tr>
 
-        <td id="{$row.id}"><a href="./confirmation.php?requestId={$row.id}">{$row.id}</a></td>
+        <td id="{$row.reservation_id}"><a href="./confirmation.php?requestId={$row.reservation_id}">{$row.reservation_id}</a></td>
         <td>{$row.firstname} {$row.lastname}</td>
         <td>{$row.room_name}</td>
         <td>{$row.adults}</td>

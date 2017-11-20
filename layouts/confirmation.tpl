@@ -71,7 +71,7 @@
         <div class="body">
             <div class="row">
                 <div class="col-md-12">
-                    <form method="POST" action="./registerReservation.php" novalidate="novalidate">
+                    <form method="POST" action="./registerReservation.php">
                         <input type="hidden" name="check_in" value="{$checkIn}" />
                         <input type="hidden" name="check_out" value="{$checkOut}" />
                         <input type="hidden" name="adults" value="{$adults}" />
@@ -127,16 +127,16 @@
                             <div class="form-group">
                                 <label for="address_line_one" class="col-md-3 control-label">Address 1</label>
                                 <div class="col-md-6">
-                                    <textarea class="form-control" type="text" value="{$addressLineOne}" rows="2" data-val="false" data-val-required="The Address 1 field is required."
-                                        id="address_line_one" name="address_line_one" {$disabled}></textarea>
+                                    <textarea class="form-control" type="text" rows="2" data-val="false" data-val-required="The Address 1 field is required."
+                                        id="address_line_one" name="address_line_one" {$disabled}>{$addressLineOne}</textarea>
                                     <span class="text-danger field-validation-valid" data-valmsg-for="address" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="address_line_two" class="col-md-3 control-label">Address 2</label>
                                 <div class="col-md-6">
-                                    <textarea class="form-control" type="text" value="{$addressLineTwo}" rows="2" data-val="false" data-val-required="The Address 2 field is required."
-                                        id="address_line_two" name="address_line_two" {$disabled}></textarea>
+                                    <textarea class="form-control" type="text" rows="2" data-val="false" data-val-required="The Address 2 field is required."
+                                        id="address_line_two" name="address_line_two" {$disabled}>{$addressLineTwo}</textarea>
                                     <span class="text-danger field-validation-valid" data-valmsg-for="address_line_two" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
@@ -178,7 +178,7 @@
                                     <div class="col-md-12">
                                         <div class="form-horizontal">
                                             <div class="form-group">
-                                                <label for="email_id" class="col-md-3 control-label">Card Type
+                                                <label for="card_type" class="col-md-3 control-label">Card Type
                                                     <span class="validation">*</span>
                                                 </label>
                                                 <div class="col-md-6">

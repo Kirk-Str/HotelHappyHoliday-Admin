@@ -4,16 +4,28 @@
 
 <div class="row block">
     <div class="col-md-4 text-center clear-padding">
-        <div class="header"><h4>Check In</h4></div>
-        <div class="body"><p class="lead">{$checkIn}</p></div>
+        <div class="header">
+            <h4>Check In</h4>
+        </div>
+        <div class="body">
+            <p class="lead">{$checkIn}</p>
+        </div>
     </div>
     <div class="col-md-4 text-center clear-padding">
-        <div class="header"><h4>Check Out</h4></div>
-        <div class="body"><p class="lead">{$checkOut}</p></div>
+        <div class="header">
+            <h4>Check Out</h4>
+        </div>
+        <div class="body">
+            <p class="lead">{$checkOut}</p>
+        </div>
     </div>
     <div class="col-md-4 text-center clear-padding">
-        <div class="header"><h4>Guests</h4></div>
-        <div class="body"><p class="lead">{$guests}</p></div>
+        <div class="header">
+            <h4>Guests</h4>
+        </div>
+        <div class="body">
+            <p class="lead">{$guests}</p>
+        </div>
     </div>
 </div>
 
@@ -24,19 +36,22 @@
 <div class="row block">
     <div class="col-md-12 clear-padding">
         <div class="body">
-            {foreach $suitesList val implode='<hr class="featurette-divider margin-offset-4">'}
+            {foreach $suitesList val implode='
+            <hr class="featurette-divider margin-offset-4">'}
 
             <form action="./confirmation.php" method="POST">
 
-            <input type="hidden" name="check_in" value="{$checkIn}" />
-            <input type="hidden" name="check_out" value="{$checkOut}" />
-            <input type="hidden" name="adults" value="{$adults}" />
-            <input type="hidden" name="children" value="{$children}" />
-            <input type="hidden" name="room_id" value="{$val.room_id}" />
+                <input type="hidden" name="check_in" value="{$checkIn}" />
+                <input type="hidden" name="check_out" value="{$checkOut}" />
+                <input type="hidden" name="adults" value="{$adults}" />
+                <input type="hidden" name="children" value="{$children}" />
+                <input type="hidden" name="room_id" value="{$val.room_id}" />
 
                 <section class="row featurette">
                     <div class="col-md-8 col-md-push-4">
-                        <h2 class="featurette-heading">{$val.room_name} <span class="text-muted">{$val.caption}</span></h2>
+                        <h2 class="featurette-heading">{$val.room_name}
+                            <span class="text-muted">{$val.caption}</span>
+                        </h2>
                         <div class="col-md-6">
                             <table class="margin-offset-4">
                                 <tr>
@@ -86,7 +101,7 @@
                     </div>
                 </section>
 
-                </form>
+            </form>
             {/foreach}
         </div>
     </div>

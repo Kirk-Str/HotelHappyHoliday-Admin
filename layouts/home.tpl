@@ -92,33 +92,27 @@
     </h3>
 </div>
 <div class="row">
+
+{foreach $offersList row}
+
     <div class="col-md-4 col-sm-1">
         <section class="card">
-            <img class="featurette-image img-responsive center-block" src="assets/images/home/honeymoon.jpg" />
-            <h3>Honeymoon Packages</h3>
-            <p class="lead">Holiday's Restaurant & Spa Resort promises you the most suitable environment for you to spend holiday just like a dream.</p>
-            <p><button type="button" class="btn btn-submit" data-toggle="modal" data-target=".bs-example-modal-lg">Book Now</button></p>
+            <img class="featurette-image img-responsive card-img-top center-block" src="data:image;base64,{$row.thumbnail}" data-holder-rendered="true">
+            <h3>{$row.caption}</h3>
+            <p class="lead">{$row.description}</p>
+            <p>
+            {if $userType == 2 }
+                <a href="./offerRequest.php?type=add&offerId={$row.offer_id}" class="btn btn-submit">Book Now</a>
+            {else}
+                <a href="#" class="btn btn-submit" data-toggle="modal" data-target=".bs-example-modal-lg">Book Now</a>
+            {/if}
+
+            </p>
             <hr class="goldenbreak-5px" />
         </section>
     </div>
-    <div class="col-md-4 col-sm-1">
-        <section class="card">
-            <img class="featurette-image img-responsive center-block" src="assets/images/home/birthday.jpg" />
-            <h3>Birthday Offer</h3>
-            <p class="lead">Make that day special and celebrate your birthday at Holiday&trade;</p>
-            <p><button type="button" class="btn btn-submit" data-toggle="modal" data-target=".bs-example-modal-lg">Book Now</button></p>
-            <hr class="goldenbreak-5px" />
-        </section>
-    </div>
-    <div class="col-md-4 col-sm-1">
-        <section class="card">
-            <img class="featurette-image img-responsive center-block" src="assets/images/home/longstay.jpg" />
-            <h3>Long Stay Package</h3>
-            <p class="lead">The long stay package is suitable for those who prefer to stay at Regnum Carya for minimum 14 nights.</p>
-            <p><button type="button" class="btn btn-submit" data-toggle="modal" data-target=".bs-example-modal-lg">Book Now</button></p>
-            <hr class="goldenbreak-5px" />
-        </section>
-    </div>
+
+{/foreach}
 </div>
 
 <div class="row featurette wow fadeInRight" data-wow-duration="500ms" data-wow-delay="400ms">

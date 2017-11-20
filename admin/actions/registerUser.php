@@ -1,6 +1,6 @@
 <?php
 
-require  __DIR__ . '../../vendor/autoload.php';
+require  __DIR__ . '../../../vendor/autoload.php';
 
 if (Input::exists()){
 
@@ -105,7 +105,7 @@ if (Input::exists()){
 
 			try{
 
-				if($_POST['type'] == "add")
+				if(Input::get('type') == "add")
 				{
 
 					$salt = Hash::salt(32);
@@ -122,27 +122,50 @@ if (Input::exists()){
 						'city' => Input::get('city'),
 						'country' => Input::get('country'),
 						'contact_no' => Input::get('contact_no'),
-						'role' => '2',
+						'role' => Input::get('role'),
 					));
+					
 				}
-				else if($_POST['type'] == "edit")
+				else if(Input::get('type') == "edit")
 				{
 
 					$emailId = Input::get('email_id');
 
 					$row = $user->find($emailId);
+					$updateArray = '';
 
-					$user->update(array(
-						'password' => Hash::make(Input::get('password'), $row->salt),
-						'avatar_image' => $imgContent,
-						'firstname' => Input::get('firstname'),
-						'lastname' => Input::get('lastname'),
-						'address_line_one' => Input::get('address_line_one'),
-						'address_line_two' => Input::get('address_line_two'),
-						'city' => Input::get('city'),
-						'country' => Input::get('country'),
-						'contact_no' => Input::get('contact_no'),
-					), array('email_id', '=', $emailId));
+					if($imgContent == NULL){
+
+						$updateArray = array(
+							'password' => Hash::make(Input::get('password'), $row->salt),
+							'firstname' => Input::get('firstname'),
+							'lastname' => Input::get('lastname'),
+							'address_line_one' => Input::get('address_line_one'),
+							'address_line_two' => Input::get('address_line_two'),
+							'city' => Input::get('city'),
+							'country' => Input::get('country'),
+							'contact_no' => Input::get('contact_no'),
+							'role' => Input::get('role')
+						);
+
+					}else{
+
+						$updateArray = array(
+							'password' => Hash::make(Input::get('password'), $row->salt),
+							'avatar_image' => $imgContent,
+							'firstname' => Input::get('firstname'),
+							'lastname' => Input::get('lastname'),
+							'address_line_one' => Input::get('address_line_one'),
+							'address_line_two' => Input::get('address_line_two'),
+							'city' => Input::get('city'),
+							'country' => Input::get('country'),
+							'contact_no' => Input::get('contact_no'),
+							'role' => Input::get('role')
+						);
+
+					}
+
+					$user->update($updateArray, array('email_id' =>  "'$emailId'"));
 
 				}else{
 					//Delete user code
@@ -152,27 +175,9 @@ if (Input::exists()){
 				die($e->getMessage());
 			}
 
-			$login = $user->login(Input::get('email_id'), Input::get('password'), $remember);
-			if ($login){
+			Redirect::to('../users.php?type=opt-filter-all');
 
-				//Redirect::to('../index.php'); 
-				Session::put('message_title', 'Welcome to Hotel Happy Holiday');
-				Session::put('message', 'Welcome to Hotel Happy Holiday, ' . Input::get('firstname') . ' ' . Input::get('lastname'));
-				Session::put('sub_message', ' Enjoy our premium services via loyalty membership program.');
-
-				Redirect::to('../message.php');
-
-			} else {
-
-				Session::put('message_title', 'There seems to be a problem :(');
-				Session::put('message', 'Sorry, logging in no worky.');
-				Session::put('sub_message', 'There seems to be a problem :(');
-
-				Redirect::to('../message.php');
-
-				//echo 'Sorry, logging in no worky';
-			}
-		
+				//echo 'Sorry, logging in no worky';	
 		} else {
 
 			foreach($validation->errors() as $error){
@@ -182,7 +187,7 @@ if (Input::exists()){
 			}
 
 			Session::put('message_title', 'There seems to be a problem :(');
-			Session::put('message', 'Sorry, logging in no worky.');
+			Session::put('message', 'There seems to be a problem :(');
 			Session::put('sub_message', $error);
 			Redirect::to('../message.php');
 		}

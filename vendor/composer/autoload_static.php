@@ -11,6 +11,8 @@ class ComposerStaticInitf53cafaede392927695eca28c32c4e8c
         'cb6e10566b8bad640922aba7ecd33ee9' => __DIR__ . '/../..' . '/functions/sanitize.php',
         '5d1441d806e4b906a7a4309631879c3b' => __DIR__ . '/../..' . '/functions/objectToArray.php',
         'bb00c89d6bfa380e77a8307e500d6eb1' => __DIR__ . '/../..' . '/functions/clear.php',
+        '8d8f138dcabbca07be47908a211c902c' => __DIR__ . '/../..' . '/functions/data_uri.php',
+        '47966909933e3b6faa57e48a79488aef' => __DIR__ . '/../..' . '/functions/generate_img.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -33,6 +35,7 @@ class ComposerStaticInitf53cafaede392927695eca28c32c4e8c
         'DB' => __DIR__ . '/../..' . '/classes/DB.php',
         'Hash' => __DIR__ . '/../..' . '/classes/Hash.php',
         'Input' => __DIR__ . '/../..' . '/classes/Input.php',
+        'Offer' => __DIR__ . '/../..' . '/classes/Offer.php',
         'PageTemplate' => __DIR__ . '/../..' . '/classes/PageTemplate.php',
         'Redirect' => __DIR__ . '/../..' . '/classes/Redirect.php',
         'Request' => __DIR__ . '/../..' . '/classes/Request.php',

@@ -30,6 +30,7 @@ $mainPage = new Dwoo\Data();
 $mainPage->assign('pageTitle', 'Reservation');
 $mainPage->assign('userType', $userType);
 $mainPage->assign('username', strtoupper($username));
+$mainPage->assign('avatar', $avatar);
 $mainPage->assign('content', $core->get($reservationTemplate, $explorePage));
 $mainPage->assign('footer', $core->get($footerTemplate));
 $mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));

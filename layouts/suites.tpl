@@ -45,7 +45,7 @@
                 <p class="lead">{$val.description}</p>
             </div>
             <div class="col-md-4 col-md-pull-8">
-                <img class="featurette-image img-responsive center-block" src="assets/images/home/suite.jpg" data-holder-rendered="true">
+                <img class="featurette-image img-responsive center-block" src="data:image;base64,{$val.thumbnail}" data-holder-rendered="true">
             </div>
         </div>
     {else}
@@ -55,7 +55,7 @@
             <p class="lead">{$val.description}</p>
         </div>
         <div class="col-md-4">
-            <img class="featurette-image img-responsive center-block" src="assets/images/home/del.jpg" data-holder-rendered="true">
+            <img class="featurette-image img-responsive center-block" src="data:image;base64,{$val.thumbnail}" data-holder-rendered="true">
         </div>
         </div>
     {/if}

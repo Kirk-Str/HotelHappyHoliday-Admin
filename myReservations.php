@@ -51,6 +51,8 @@ $mainPage = new Dwoo\Data();
 $mainPage->assign('pageTitle', 'Rooms');
 $mainPage->assign('userType', $userType);
 $mainPage->assign('username', strtoupper($username));
+$mainPage->assign('avatar', $avatar);
+$mainPage->assign('avatar', $avatar);
 $mainPage->assign('content', $core->get($confirmationTemplate, $confirmationPageData));
 $mainPage->assign('footer', $core->get($footerTemplate));
 $mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));

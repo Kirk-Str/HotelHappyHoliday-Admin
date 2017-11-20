@@ -26,14 +26,26 @@ if($userType == 1){
                  
  			} else {
 
- 				echo 'Sorry, logging in no worky';
+				Session::put('message_title', 'There seems to be a problem :(');
+				Session::put('message', 'Sorry, logging in no worky.');
+				Session::put('sub_message', 'There seems to be a problem :(');
+
+				Redirect::to('../message.php');
+
  			}
 
  		} else {
 
  			foreach($validation->errors() as $error){
- 				echo $error, '<br>';
-             }	
+				
+				$error .= $error . '</br>';
+				
+			}
+
+			Session::put('message_title', 'There seems to be a problem :(');
+			Session::put('message', 'Sorry, logging in no worky.');
+			Session::put('sub_message', $error);
+			Redirect::to('../message.php');
              		
 		}
  	}

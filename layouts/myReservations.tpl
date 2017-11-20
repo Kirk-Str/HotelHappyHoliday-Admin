@@ -28,7 +28,7 @@
 
     <tr>
 
-        <td id="{$row.id}"><a href="./myReservationDetail.php?requestId={$row.id}">{$row.id}</a></td>
+        <td id="{$row.reservation_id}"><a href="./myReservationDetail.php?requestId={$row.reservation_id}">{$row.reservation_id}</a></td>
         <td>{$row.room_name}</td>
         <td>{$row.adults}</td>
         <td>{$row.children}</td>

@@ -1,23 +1,23 @@
 <?php
-class Room {
+class Offer {
 
 	private $_db,
 			$_data;
 
-	public function __construct($room = null) {
+	public function __construct($offer = null) {
 		$this->_db = DB::getInstance();
 	}
 
 	public function update($fields = array(),$id=null){
 
-		if(!$this->_db->update('room',$id,$fields)){
+		if(!$this->_db->update('offer',$id,$fields)){
 			throw new Exception('There was a problem updating the record.');
 		}
 	}
 
 	public function create($fields=array()){
 
-		if (!$this->_db->insert('room', $fields)){
+		if (!$this->_db->insert('offer', $fields)){
 			throw new Exception('There was a problem creating the the record.');
 		}
 		
@@ -25,17 +25,17 @@ class Room {
 
 	public function delete($id){
 
-		if(!$this->_db->delete('room',array('room_id', '=', $id))){
+		if(!$this->_db->delete('offer',array('offer_id', '=', $id))){
 			throw new Exception('There was a problem deleting the record.');
 		}
 		
 	}
 
-	public function find($room){
+	public function find($offer){
 
-		if(!is_null($room)){
-			$field = 'room_id';
-			$data = $this ->_db->get('room',array($field, "=", $room));
+		if(!is_null($offer)){
+			$field = 'offer_id';
+			$data = $this ->_db->get('offer',array($field, "=", $offer));
 
 			if($data->count()){
 				$this->_data = $data->first();
@@ -47,31 +47,20 @@ class Room {
 
 	}
 
+
+	//List all offers from offer master
 	public function selectAll(){
 	
-			$data = $this ->_db->get('room');
+		$data = $this ->_db->get('offer');
 
-			if($data->count()){
-				$this->_data = $data->results();
-				return $this->_data;
-			}
+		if($data->count()){
+			$this->_data = $data->results();
+			return $this->_data;
+		}
 
 		return false;
 
 	}
-
-	public function getAvailableRooms(){
-		
-				$data = $this ->_db->get('room');
-	
-				if($data->count()){
-					$this->_data = $data->results();
-					return $this->_data;
-				}
-	
-			return false;
-	
-		}
 
 
 	public function data(){

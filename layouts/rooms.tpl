@@ -18,6 +18,7 @@
 
     <thead>
         <tr>
+            <th>Id</th>
             <th>Room Name</th>
             <th>Thumbnail</th>
             <th>Total Rooms</th>
@@ -30,30 +31,25 @@
         </tr>
     </thead>
     
-<?php 
 
-    $room = new Room();
+    {foreach $roomList row}
 
-    $rows = $room->selectAll();
+        <tr>
+    
+            <td id="{$row.room_id}"><a href="./roomdetail.php?type=edit&roomId={$row.room_id}">{$row.room_id}</a></td>
+            <td>{$row.room_name}</td>
+            <td>{if $row.thumbnail != ""}<img height="80" width="80" src="data:image;base64,{$row.thumbnail}"{/if}</td>
+            <td>{$row.total_room}</td>
+            <td>{$row.occupancy}</td>
+            <td>{$row.size}</td>
+            <td>{$row.rate}</td>
+            <td>{$row.caption}</td>
+            <td>{$row.description}</td>
+            <td><a href="./roomdetail.php?type=delete&roomId={$row.room_id}">Delete</a></td>
 
-    if($rows){
-        foreach($rows as $row){  
-                echo "<tr>";
-                    echo '<td id="' . $row->room_id . '"></td>';
-                    echo "<td>" . $row->room_name . "</td>";
-                    echo "<td>" . "</td>";
-                    echo "<td>" . $row->total_room . "</td>";
-                    echo "<td>" . $row->occupancy . "</td>";
-                    echo "<td>" . $row->size . "</td>";
-                    echo "<td>" . $row->rate . "</td>";
-                    echo "<td>" . $row->caption . "</td>";
-                    echo "<td>" . $row->description . "</td>";
-                    echo '<td><a href="./roomdetail.php?type=edit&id=' . $row->room_id . '">Edit</a></td>';
-                    echo '<td><a href="./roomdetail.php?type=delete&id=' . $row->room_id . '">Delete</a></td>';
-                echo "</tr>";
-        }
-    }
-        
-?>
+        </tr>
+    
+    {/foreach}
+       
 
 </table>

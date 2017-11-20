@@ -1,29 +1,19 @@
 <?php
 // Include the main class, the rest will be automatically loaded
-require __DIR__ . '../core/init.php';
+require __DIR__ . '../../core/init.php';
 
-if(empty($_GET)){
+if($userType != 1 || empty($_GET) || empty(Input::get('type'))){
     
     clearMessage();
-    
-    Redirect::to('./message.php');
+    Redirect::to('../message.php');
 
 }
 
 $user = new User();
 
-if($userType == 2){
+$id = Input::get('userId');
 
-    $row = $user->find($userId);
-
-}
-else if($userType == 1 && isset($_GET['userId'])){
-
-    $id = $_GET['userId'];
-
-    $row = $user->find($id);
-
-}
+$row = $user->find($id);
 
 $request_type;
 $pageTitle;
@@ -42,7 +32,13 @@ $contentData->assign('city', '');
 $contentData->assign('country', '');
 $contentData->assign('contactNo', '');    
 
-if(isset($_GET['type']) && $_GET['type'] == 'add')
+$contentData->assign('registered', '');
+$contentData->assign('admin', '');
+$contentData->assign('nonRegistered', '');
+$contentData->assign('deactivated', '');
+
+
+if(Input::get('type') == 'add')
 {
 
     $pageTitle = "NEW USER";
@@ -66,34 +62,49 @@ else
         $contentData->assign('city', $row->city);
         $contentData->assign('country', $row->country);
         $contentData->assign('contactNo', $row->contact_no);
+        
+        $role = $row->role;
+        
+        if($role == 2){
+            $contentData->assign('registered', 'selected');
+        }elseif($role == 1){
+            $contentData->assign('admin', 'selected');
+        }elseif($role == 3){
+            $contentData->assign('nonRegistered', 'selected');
+        }elseif($role == 0){
+            $contentData->assign('deactivated', 'selected');
+        }
 
     }
 }
 
-$contentData->assign('request_type', $_GET['type']);
+$contentData->assign('request_type', Input::get('type'));
 $contentData->assign('pageTitle', $pageTitle);
 $contentData->assign('buttonName', $buttonName);
+$contentData->assign('userType', $userType);
 
 //Application Logic in Page
 // Create the controller, it is reusable and can render multiple templates
 $core = new Dwoo\Core();
 
 // Load a template file, this is reusable if you want to render multiple times the same template with different data
-$registerTemplate = new Dwoo\Template\File('./layouts/register.tpl');
-$exploreTemplate = new Dwoo\Template\File('./layouts/template/_explore.tpl');
-$footerTemplate = new Dwoo\Template\File('./layouts/template/_footer.tpl');
-$scriptTemplate = new Dwoo\Template\File('./layouts/template/_scripts.tpl');
-$validationScriptTemplate = new Dwoo\Template\File('./layouts/template/_validationScripts.tpl');
-$layoutTemplate = new Dwoo\Template\File('./layouts/template/_Layout.tpl');
+$registerTemplate = new Dwoo\Template\File('../layouts/register.tpl');
+$exploreTemplate = new Dwoo\Template\File('../layouts/template/_explore.tpl');
+$footerTemplate = new Dwoo\Template\File('../layouts/template/_footer.tpl');
+$scriptTemplate = new Dwoo\Template\File('../layouts/template/_scripts.tpl');
+$validationScriptTemplate = new Dwoo\Template\File('../layouts/template/_validationScripts.tpl');
+$layoutTemplate = new Dwoo\Template\File('../layouts/template/_Layout.tpl');
 
 // Create a data set, this data set can be reused to render multiple templates if it contains enough data to fill them all
 $contentData->assign('explore', $core->get($exploreTemplate));
+
 
 $validationScriptPage = new Dwoo\Data();
 $validationScriptPage->assign('validationScripts', $core->get($validationScriptTemplate));
 
 $mainPage = new Dwoo\Data();
 $mainPage->assign('pageTitle', 'User - ' . $pageTitle);
+$mainPage->assign('userType', $userType);
 $mainPage->assign('username', strtoupper($username));
 $mainPage->assign('avatar', $avatar);
 $mainPage->assign('content', $core->get($registerTemplate, $contentData));

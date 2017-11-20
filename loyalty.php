@@ -32,6 +32,7 @@ $mainPage = new Dwoo\Data();
 $mainPage->assign('pageTitle', 'Loyalty');
 $mainPage->assign('userType', $userType);
 $mainPage->assign('username', strtoupper($username));
+$mainPage->assign('avatar', $avatar);
 $mainPage->assign('content', $core->get($loyaltyTemplate, $explorePage));
 $mainPage->assign('footer', $core->get($footerTemplate));
 $mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));

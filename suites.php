@@ -34,6 +34,7 @@ $mainPage = new Dwoo\Data();
 $mainPage->assign('pageTitle', 'Suites');
 $mainPage->assign('userType', $userType);
 $mainPage->assign('username', strtoupper($username));
+$mainPage->assign('avatar', $avatar);
 $mainPage->assign('content', $core->get($suitesTemplate, $contentData));
 $mainPage->assign('footer', $core->get($footerTemplate));
 $mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));

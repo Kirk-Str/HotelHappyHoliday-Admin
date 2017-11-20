@@ -72,8 +72,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-md-4 col-md-offset-3">
-                                    <input type="submit" class="btn btn-block btn-submit" value="{$checkActionButton}" />
+                                <div class="col-md-3 col-md-offset-3">
+                                    <input type="submit" class="btn btn-block btn-info" value="{$checkActionButton}" />
                                 </div>
                             </div>
                             

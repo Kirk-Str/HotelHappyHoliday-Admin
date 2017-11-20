@@ -15,11 +15,6 @@ $(function () {
         console.debug(picker.endDate.format('YYYY-MM-DD'));
     });
 
-    $('#daterange').on('apply.daterangepicker', function (ev, picker) {
-        $(this).val(picker.startDate.format('YYYY-MM-DD'));
-        console.debug(picker.endDate.format('YYYY-MM-DD'));
-    });
-
     $('input[name="daterange"]').on('apply.daterangepicker', function (ev, picker) {
 
         console.debug(picker.endDate.format('YYYY-MM-DD'));
@@ -64,6 +59,30 @@ $(function () {
 
     //////////////////////////////////////////////////////////////////
 
+    $('input[name="event_date_range"]').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
+
+    // $('#event_date_range').on('apply.daterangepicker', function (ev, picker) {
+    //     $(this).val(picker.startDate.format('YYYY-MM-DD'));
+    // });
+
+    $('input[name="event_date_range"]').on('apply.daterangepicker', function (ev, picker) {
+
+        $('#event_start_date').val(picker.startDate.format('YYYY-MM-DD'));
+        $('#event_start_date_h').val(picker.startDate.format('YYYY-MM-DD'));
+        
+        $('#event_end_date').val(picker.endDate.format('YYYY-MM-DD'));
+        $('#event_end_date_h').val(picker.endDate.format('YYYY-MM-DD'));
+
+    });
+
+
+    //////////////////////////////////////////////////////////////////
+
     $('#reservation-list tbody').on( 'click', 'tr', function () {
       
         var id = this.cells[0].id;
@@ -81,9 +100,30 @@ $(function () {
     $('#room-list tbody').on( 'click', 'tr', function () {
         
           var id = this.cells[0].id;
-          location.href="./roomdetail.php?type=edit&id=" + id;
+          location.href="./roomdetail.php?type=edit&roomId=" + id;
   
-      } );
+      });
+
+      $('#user-list tbody').on( 'click', 'tr', function () {
+        
+          var id = this.cells[0].id;
+          location.href="./userDetail.php?type=edit&userId=" + id;
+  
+      });
+
+      $('#offer-list tbody').on( 'click', 'tr', function () {
+ 
+          var id = this.cells[0].id;
+          location.href="./offerdetail.php?type=edit&offerId=" + id;
+  
+      });
+
+      $('#request-list tbody').on( 'click', 'tr', function (){
+
+            var id = this.cells[0].id;
+            location.href="./request.php?requestId=" + id;
+
+      });
 
 
 

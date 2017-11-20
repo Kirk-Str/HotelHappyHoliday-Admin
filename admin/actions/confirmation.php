@@ -16,8 +16,8 @@ if (Input::exists()){
 			$reservation = new Reservation();
 			$reservationStatus = 0;
 
-			if($reservation->findReservation($reservationId)){
-				if(empty($reservation->data()->actual_check_in)){
+			if($reservation->find($reservationId)){
+				if(empty($reservation->data()->check_in_actual)){
 					$reservationStatus = 1;
 				}else{
 					$reservationStatus = 2;
@@ -59,23 +59,20 @@ if (Input::exists()){
 					if(Input::get('type') == "0")
 					{
 
-						$reservation->checkIn(array(
-							'adults' => Input::get('actual_adults'),
-							'children' => Input::get('actual_children') ?? NULL,
-							'check_in' => Input::get('check_in_single'),
-						), array('request_id' => $reservationId));
+						$reservation->update(array(
+							'adults_actual' => Input::get('actual_adults'),
+							'children_actual' => Input::get('actual_children') ?? NULL,
+							'check_in_actual' => Input::get('check_in_single'),
+						), array('reservation_id' => $reservationId));
 
 					}
 					else if(Input::get('type') == "1")
 					{
 
-						$reservation->checkIn(array(
-							'check_out' => Input::get('check_out_single'),
-						), array('request_id' => $reservationId));
+						$reservation->update(array(
+							'check_out_actual' => Input::get('check_out_single'),
+						), array('reservation_id' => $reservationId));
 
-						$request = new Request();
-						$request->find($reservationId);
-						$request->update(array('approval_status' => 1, 'approval_timestamp' => date('Y-m-d h:i:s a')), $reservationId);
 					}
 
 				} catch(Exception $e){

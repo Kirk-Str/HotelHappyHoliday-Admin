@@ -11,6 +11,7 @@ return array(
     'DB' => $baseDir . '/classes/DB.php',
     'Hash' => $baseDir . '/classes/Hash.php',
     'Input' => $baseDir . '/classes/Input.php',
+    'Offer' => $baseDir . '/classes/Offer.php',
     'PageTemplate' => $baseDir . '/classes/PageTemplate.php',
     'Redirect' => $baseDir . '/classes/Redirect.php',
     'Request' => $baseDir . '/classes/Request.php',
