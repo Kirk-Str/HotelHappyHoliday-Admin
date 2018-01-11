@@ -419,6 +419,10 @@ h3.para{
     color: #496ebc !important;
 }
 
+/* .text-danger{
+    color:rgb(219, 32, 32) !important;
+} */
+
 .form-group label {
   color: #4E4E4E;
   font-size: 16px;
@@ -491,19 +495,37 @@ table tr{
     width: 20px;
 }
 
-.block {
-    margin: 20px 0 40px 0;
-    padding: 0;
-    background-color: #fff;
-    border: 1px solid #e2e2e2;
-    border-radius: 2px;
-    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-}
+    .block {
+        margin: 20px 0 40px 0;
+        padding: 0;
+        background-color: #fff;
+        border: 1px solid #e2e2e2;
+        border-radius: 2px;
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    }
+
+    .block-active{
+        border: 1px solid #bce8f1 !important;
+    }
+
+    .block-cancelled{
+        border: 1px solid #f2dede !important;
+    }
 
     .block .header {
         padding: 2px;
         background-color: rgb(232, 232, 232);
+    }
+
+    .block .header-active{
+        color: #31708f;
+        background-color: #d9edf7 !important;
+    }
+
+    .block .header-cancelled{
+        color: #a94442;
+        background-color: #f2dede !important;
     }
 
     .block .body {
@@ -517,6 +539,7 @@ table tr{
     margin: 0px 0 0px 0;
     color: rgb(60, 60, 60);
 }
+
 
 
 .label-1-sub {

@@ -24,7 +24,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="<?php echo Config::get('application_path') . 'index.php?dashboard=new' ?>"><img src="<?php echo Config::get('application_path') .'assets/images/home/Brand Logo.jpg'; ?>" height="78" /></a>
+                <a href="<?php echo Config::get('application_path') . 'index.php?dashboard=opt-filter-new' ?>"><img src="<?php echo Config::get('application_path') .'assets/images/home/Brand Logo.jpg'; ?>" height="78" /></a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">

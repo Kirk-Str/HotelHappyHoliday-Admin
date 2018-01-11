@@ -16,7 +16,7 @@
     // header("Content-type: image/png"); 
     // echo $_GET['img']; 
 
-    header("content-type:image/jpeg");
+    //header("content-type:image/jpeg");
     
     // $host = 'localhost';
     // $user = 'root';
@@ -30,12 +30,14 @@
     
     // $select_image="select * from image_table where imagename='$name'";
 
-    $this->_db = DB::getInstance();
+    // $this->_db = DB::getInstance();
     
-    $data = $this ->_db->get('room',array($room_id, "=", '1'));
+    // $data = $this ->_db->get('room',array($room_id, "=", '1'));
 
-    $data->thumbnail;
+    // $data->thumbnail;
    
-    
+    $room = new Room();
+    $room->getAvailableRooms('2017-11-18', '2017-11-21', 2);
+    print_r($room);
 
 ?>

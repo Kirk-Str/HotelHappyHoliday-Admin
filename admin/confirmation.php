@@ -12,7 +12,9 @@ if($userType != 1 || empty($_GET)){
 
 }
 
-
+$formHeader = '';
+$inputBlockStyle = '';
+$inputHeaderStyle = '';
 $check_in = "";
 $check_out = "";
 $nightStay = 0;
@@ -24,8 +26,6 @@ $type = 0;
 $reservation = new Reservation();
 
 if($reservation->find(Input::get('requestId'))){
-
-   
 
     $reservationId = $reservation->data()->reservation_id;
     $userId = $reservation->data()->user_id;
@@ -50,77 +50,113 @@ if($reservation->find(Input::get('requestId'))){
     $actualAdults = $reservation->data()->adults_actual;
     $actualChildren = $reservation->data()->children_actual;
 
-
     $actualCheckIn = '';
     $actualCheckOut = '';
     $disabledCheckIn = '';
     $disabledCheckOut = '';
     $disabledAdults = '';
     $disabledChildren = '';
+    $disabledAdditionalCharges = '';
     $requiredCheckIn = '';
     $requiredCheckOut = '';
     $actualNightStays = 0;
-    $balanceAmountLabel = '';
+    $balanceAmountLabel = 'Balance To Be Paid';
+    $totalPayable = 0.00;
+    $additionalAmount = 0.00;
     $balanceAmount = 0.00;
+    $cancelled = true;
 
+    $additionalAmount = $reservation->data()->additional_amount;
 
     //$totalAmount = $nightStay * $roomRate;
     $minPayable = $totalAmount * (60/100);
-    $balancePayable = $totalAmount - $minPayable;
+    $balancePayable = ($totalAmount - $minPayable);
+
+    if($reservation->data()->cancelled){
 
 
-    if(empty($reservation->data()->check_in_actual)){
-
-        $disabledCheckOut = 'disabled=disabled';
-        $checkActionButton = 'Check In';
-
-    }
-
-    if(!empty($reservation->data()->check_in_actual)){
-
-        $actualCheckIn = (new DateTime($reservation->data()->check_in_actual))->format('Y-m-d');
-
+        $formHeader = 'Reservation  - Cancelled';
+        $inputBlockStyle = 'block-cancelled';
+        $inputHeaderStyle = 'header-cancelled';
 
         $disabledCheckIn = 'disabled=disabled';
         $disabledAdults = 'disabled=disabled';
         $disabledChildren = 'disabled=disabled';
-        $requiredCheckIn = 'required';
-        $checkActionButton = "Check Out";
-        $type = 1;
-
-    }
-
-    if(!empty($reservation->data()->check_out_actual)){
-
-        $CheckInDate = new DateTime($reservation->data()->check_in_actual);
-        $CheckOutDate = new DateTime($reservation->data()->check_out_actual);
-        $actualNightStays = $CheckOutDate->diff($CheckInDate)->format('%a')+1;
-        $actualCheckOut = $CheckOutDate->format('Y-m-d');
-
         $disabledCheckOut = 'disabled=disabled';
-        $requiredCheckOut = 'required';
-        $type = 2;
-        $checkActionButton = "Ok";
-
+        $disabledAdditionalCharges = 'disabled=disabled';
+        $cancelled = false;
      
-        //If guests stay more than pre-booked days, they have to pay additional amount for the days they stayed extra.
-        //Or if the guests leave before the checkout day Hotel has to give the balance to guest
-        // Following is where that happens.
+        $checkActionButton = "Ok";
+        $type = 3;
 
-        if (($actualNightStays * $roomRate) >= $totalAmount){
 
-            $balanceAmountLabel = 'Balance To Be Paid';
-            $balanceAmount = abs($balancePayable + (($actualNightStays - $reservedNightStays) *  $roomRate));
+    }else{
 
-        }else{
+        $inputBlockStyle = 'block-active';
+        $inputHeaderStyle = 'header-active';
 
-            $balanceAmountLabel = 'Balance To Be Given Back';
-            $balanceAmount = abs($balancePayable - (($reservedNightStays - $actualNightStays) *  $roomRate));
+        if(empty($reservation->data()->check_in_actual)){
+
+            $formHeader = 'Reservation - Check-In';
+
+            $disabledCheckOut = 'disabled=disabled';
+            $disabledAdditionalCharges = 'disabled=disabled';
+            $checkActionButton = 'Check In';
 
         }
 
-    }
-    
+        if(!empty($reservation->data()->check_in_actual)){
+
+            $formHeader = 'Reservation - Check-Out';
+
+            $actualCheckIn = (new DateTime($reservation->data()->check_in_actual))->format('Y-m-d');
+
+            $disabledCheckIn = 'disabled=disabled';
+            $disabledAdults = 'disabled=disabled';
+            $disabledChildren = 'disabled=disabled';
+            $requiredCheckIn = 'required';
+            $checkActionButton = "Check Out";
+            $type = 1;
+
+        }
+
+        if(!empty($reservation->data()->check_out_actual)){
+
+            $formHeader = 'Reservation - Left';
+
+            $CheckInDate = new DateTime($reservation->data()->check_in_actual);
+            $CheckOutDate = new DateTime($reservation->data()->check_out_actual);
+            $actualNightStays = $CheckOutDate->diff($CheckInDate)->format('%a')+1;
+            $actualCheckOut = $CheckOutDate->format('Y-m-d');
+            $balanceAmount = $reservation->data()->balance_amount;
+
+            $disabledCheckOut = 'disabled=disabled';
+            $disabledAdditionalCharges = 'disabled=disabled';
+            $requiredCheckOut = 'required';
+            $type = 2;
+            $checkActionButton = "Ok";
+            $totalPayable =  $balanceAmount - $additionalAmount;
+            $cancelled = false;
+
+            //If guests stay more than pre-booked days, they have to pay additional amount for the days they stayed extra.
+            //Or if the guests leave before the checkout day Hotel has to give the balance to guest
+            // Following is where that happens.
+
+            if (($actualNightStays * $roomRate) >= $totalAmount){
+
+                $balanceAmountLabel = 'Balance To Be Paid';
+                
+                //$balanceAmount = abs(($balancePayable + (($actualNightStays - $reservedNightStays) *  $roomRate)) +  $additionalAmount);
+
+            }else{
+
+                $balanceAmountLabel = 'Balance To Be Given Back';
+                //$balanceAmount = abs(($balancePayable - (($reservedNightStays - $actualNightStays) *  $roomRate))  +  $additionalAmount);
+
+            }
+
+        }
+}
 
 
     // Create the controller, it is reusable and can render multiple templates
@@ -154,29 +190,32 @@ if($reservation->find(Input::get('requestId'))){
 
     $confirmationData->assign('totalAmount', number_format($totalAmount, 2));
     $confirmationData->assign('minPayable', number_format($minPayable, 2));
+    $confirmationData->assign('additionalCharges', number_format($additionalAmount, 2));
     $confirmationData->assign('balanceToBePaid', number_format($balancePayable, 2));
-
 
     $confirmationData->assign('actualAdults', $actualAdults);
     $confirmationData->assign('actualChildren', $actualChildren);
     $confirmationData->assign('actualCheckIn', $actualCheckIn);
     $confirmationData->assign('actualCheckOut', $actualCheckOut);
     $confirmationData->assign('actualNightStays', $actualNightStays);
+    $confirmationData->assign('totalPayable', number_format($totalPayable, 2));
     $confirmationData->assign('balanceAmount', number_format($balanceAmount, 2));
-
 
     $confirmationData->assign('balanceAmountLabel', $balanceAmountLabel);
     $confirmationData->assign('requiredCheckIn', $requiredCheckIn);
     $confirmationData->assign('requiredCheckOut', $requiredCheckOut);
 
-  
-
+    $confirmationData->assign('formHeader', $formHeader);
+    $confirmationData->assign('inputBlockStyle', $inputBlockStyle);
+    $confirmationData->assign('inputHeaderStyle', $inputHeaderStyle);
     $confirmationData->assign('disabled', 'disabled=disabled');
     $confirmationData->assign('disabledCheckIn', $disabledCheckIn);
     $confirmationData->assign('disabledCheckOut', $disabledCheckOut);
     $confirmationData->assign('disabledAdults', $disabledAdults);
     $confirmationData->assign('disabledChildren', $disabledChildren);
+    $confirmationData->assign('disabledAdditionalCharges', $disabledAdditionalCharges);
     $confirmationData->assign('checkActionButton', $checkActionButton);
+    $confirmationData->assign('cancelled', $cancelled);
 
     $validationScriptPage = new Dwoo\Data();
     $validationScriptPage->assign('validationScripts', $core->get($validationScriptTemplate));

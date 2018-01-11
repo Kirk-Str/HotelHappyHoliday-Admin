@@ -53,30 +53,45 @@
                             <span class="text-muted">{$val.caption}</span>
                         </h2>
                         <div class="col-md-6">
-                            <table class="margin-offset-4">
-                                <tr>
-                                    <td class="label-1" style="width: 140px">Occupancy: </td>
-                                    <td class="label-1-sub">{$val.occupancy}</td>
+                            <table class="margin-offset-4" style="border-spacing:6px">
+                                <tr >
+                                    <td style="padding-bottom: 10px; width: 160px" class="label-1">Occupancy: </td>
+                                    <td  style="padding-bottom: 10px" class="label-1-sub">{$val.occupancy}</td>
                                 </tr>
                                 <tr>
-                                    <td class="label-1">Size: </td>
-                                    <td class="label-1-sub">{$val.size}</td>
+                                    <td  style="padding-bottom: 10px" class="label-1">Size: </td>
+                                    <td  style="padding-bottom: 10px" class="label-1-sub">{$val.size}</td>
                                 </tr>
                                 <tr>
-                                    <td class="label-1">View:</td>
-                                    <td class="label-1-sub">{$val.view}</td>
+                                    <td  style="padding-bottom: 10px" class="label-1">Rate Per Night:</td>
+                                    <td  style="padding-bottom: 10px" class="label-1-sub">{$val.rate|string_format:"%.2f"}</td>
+                                </tr>
+                                <tr>
+                                    <td  style="padding-bottom: 10px" class="label-1">View:</td>
+                                    <td  style="padding-bottom: 10px" class="label-1-sub">{$val.view}</td>
                                 </tr>
                             </table>
                         </div>
                         <div class="col-md-6">
                             <table class="margin-offset-4">
-                                <tr>
+                                <!-- <tr>
                                     <td colspan="2">
-                                        <input type="checkbox" id="checkbox67" class="css-checkbox lrg" checked="checked" />
-                                        <label for="checkbox67" name="checkbox67_lbl" class="css-label lrg web-two-style">Breakfast Included</label>
+                                        <input type="checkbox" id="breakfast-included" class="css-checkbox lrg" checked="unchecked" />
+                                        <label for="breakfast-included" name="breakfast-included_lbl" class="css-label lrg web-two-style">Breakfast Included</label>
                                     </td>
-                                </tr>
-                                <tr>
+                                </tr> -->
+
+                                {if $val.available <= 2}
+
+                                    <tr>
+                                        <td colspan="2">
+                                            <label name="warning-label" class="text-danger">Only {$val.available}(s) left!</label>
+                                        </td>
+                                    </tr>
+
+                                {/if} 
+
+                                <!-- <tr>
                                     <td class="label-1">Rooms:</td>
                                     <td>
                                         <div class="form-group">
@@ -89,15 +104,15 @@
                                             </select>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </table>
                         </div>
-                        <div class="col-md-12 row-offset-1">
+                        <div class="col-md-12">
                             <button type="submit" class="btn btn-block btn-lg btn-submit pull-right" style="width: 200px;">Select</button>
                         </div>
                     </div>
                     <div class="col-md-4 col-md-pull-8">
-                        <img class="featurette-image img-responsive center-block" src="~/images/home/suite.jpg" data-holder-rendered="true">
+                        {if $val.thumbnail != ""}<img class="featurette-image img-responsive center-block" src="data:image;base64,{$val.thumbnail}" data-holder-rendered="true"/>{/if}
                     </div>
                 </section>
 

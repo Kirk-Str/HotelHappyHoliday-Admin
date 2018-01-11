@@ -39,8 +39,8 @@ if (Input::exists()){
 				$guests = sprintf("%s Adult(s) and %s Child(Children)", $adults, $children);
 
 				$room = new Room();
-				$rows = $room->selectAll();
-			
+				$rows = $room->getAvailableRooms($check_in->format('d-m-Y'), $check_out->format('d-m-Y'), $adults);
+				
 				// Create the controller, it is reusable and can render multiple templates
 				$core = new Dwoo\Core();
 			
@@ -67,6 +67,7 @@ if (Input::exists()){
 				$mainPage->assign('pageTitle', 'Availability');
 				$mainPage->assign('userType', $userType);
 				$mainPage->assign('username', strtoupper($username));
+				$mainPage->assign('avatar', $avatar);
 				$mainPage->assign('content', $core->get($availability, $confirmationData));
 				$mainPage->assign('footer', $core->get($footerTemplate));
 				$mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));

@@ -5,7 +5,7 @@ require __DIR__ . './core/init.php';
 //Application Logic in Page
 
 if($userType == 1){
-    Redirect::to(Config::get('application_path') . 'admin/index.php?dashboard=new');
+    Redirect::to(Config::get('application_path') . 'admin/index.php?dashboard=opt-filter-new');
 }
 
 

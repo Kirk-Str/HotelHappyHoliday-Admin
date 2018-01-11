@@ -59,21 +59,24 @@ class DB{
 		$set = '';
 		$param = array();
 		$x = 1;
+		$joinerAdded = false;
 
 		if(isset($where)){
 
 			if(is_array($where[0])){
 
 				foreach($where as $args){
-	
-					$set .= $args[0] . ' ' . $args[1] . ' ?';
-					
-					if($x < count($where)){
-						$set .= ' AND ';
-					}
-					$x++;
 
-					array_push($param, $args[2]);
+					if(!is_array($args)){
+
+						$set .= ' ' . $args . ' ';
+
+					}else{
+
+						$set .= $args[0] . ' ' . $args[1] . ' ? ';
+						
+						array_push($param, $args[2]);
+					}
 
 				}
 

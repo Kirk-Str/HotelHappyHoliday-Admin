@@ -40,7 +40,7 @@ if (Input::exists()){
 				$adults = Input::get('adults');
                 $children = Input::get('children');
                 $room_id = Input::get('room_id');
-
+                $breakfastIncluded = Input::get('breakfast-included');
                 
 
                 if($validUser){
@@ -85,6 +85,8 @@ if (Input::exists()){
                 $confirmationData->assign('roomRate', number_format($roomRate, 2));
                 $confirmationData->assign('roomId', $room_id);
 
+                $confirmationData->assign('breakfastIncluded', $breakfastIncluded);
+
                 $confirmationData->assign('totalAmount', number_format($totalAmount, 2));
                 $confirmationData->assign('minPayable', number_format($minPayable, 2));
                 $confirmationData->assign('balanceToBePaid', number_format($balancePayable, 2));
@@ -128,7 +130,8 @@ if (Input::exists()){
                 $mainPage = new Dwoo\Data();
                 $mainPage->assign('pageTitle', 'Availability');
                 $mainPage->assign('userType', $userType);
-				$mainPage->assign('username', strtoupper($username));
+                $mainPage->assign('username', strtoupper($username));
+                $mainPage->assign('avatar', $avatar);
                 $mainPage->assign('content', $core->get($confirmation, $confirmationData));
                 $mainPage->assign('footer', $core->get($footerTemplate));
                 $mainPage->assign('scripts', $core->get($scriptTemplate, $validationScriptPage));

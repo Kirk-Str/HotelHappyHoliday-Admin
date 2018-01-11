@@ -22,9 +22,9 @@ $type = 0;
 
 $reservation = new Reservation();
 
-if($reservation->findReservation(Input::get('requestId'), $userId)){
+if($reservation->find(Input::get('requestId'), $userId)){
 
-    $reservationId = $reservation->data()->id;
+    $reservationId = $reservation->data()->reservation_id;
     $firstname = $reservation->data()->firstname;
     $lastname = $reservation->data()->lastname;
     $requestTimestamp = new DateTime($reservation->data()->requestTimestamp);

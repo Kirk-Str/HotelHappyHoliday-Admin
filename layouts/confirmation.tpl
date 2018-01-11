@@ -59,7 +59,6 @@
         </div>
     </div>
     <div class="col-md-8">
-
     </div>
 </div>
 
@@ -77,6 +76,7 @@
                         <input type="hidden" name="adults" value="{$adults}" />
                         <input type="hidden" name="children" value="{$children}" />
                         <input type="hidden" name="room_id" value="{$roomId}" />
+                        <input type="hidden" name="breakfast-included" value="{$breakfastIncluded}" />
 
                         <input type="hidden" name="user_id" value="{$userId}" />
                         <input type="hidden" name="firstname" value="{$firstname}" />
@@ -85,7 +85,6 @@
                         <input type="hidden" name="country" value="{$country}" />
                         <input type="hidden" name="contact_no" value="{$contactNo}" />
                         <input type="hidden" name="userType" value="{$userType}" />
-
                         <div class="form-horizontal">
                             <div class="text-danger validation-summary-valid" data-valmsg-summary="true">
                                 <ul>
@@ -114,7 +113,6 @@
                                 </div>
                             </div>
                             <div class="form-group">
-
                                 <label for="lastname" class="col-md-3 control-label">Lastname
                                     <span class="validation">*</span>
                                 </label>
@@ -204,7 +202,7 @@
                                                     <span class="validation">*</span>
                                                 </label>
                                                 <div class="col-md-6">
-                                                    <input class="form-control" type="number" data-val="true" data-val-required="The card type field is required." id="card_no"
+                                                    <input class="form-control" type="number" maxlength="16" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" data-val="true" data-val-required="The Card No field is required." id="card_no"
                                                         name="card_no">
                                                     <span class="text-danger field-validation-valid" data-valmsg-for="card_no" data-valmsg-replace="true"></span>
                                                 </div>
@@ -213,21 +211,51 @@
                                                 <label for="expiry_month" class="col-md-3 control-label">Expiry Month
                                                     <span class="validation">*</span>
                                                 </label>
-                                                <div class="col-md-6">
-                                                    <input class="form-control" type="number" data-val="true" data-val-required="The expiry month field is required." id="expiry_month"
+                                                <div class="col-md-3">
+                                                    <select class="form-control" data-val="true" data-val-required="The expiry month field is required." id="expiry_month"
                                                         name="expiry_month">
+                                                      
+                                                            <option value="01">01</option>
+                                                            <option value="02">02</option>
+                                                            <option value="03">03</option>
+                                                            <option value="04">04</option>
+                                                            <option value="05">05</option>
+                                                            <option value="06">06</option>
+                                                            <option value="07">07</option>
+                                                            <option value="08">08</option>
+                                                            <option value="09">09</option>
+                                                            <option value="11">11</option>
+                                                            <option value="12">12</option>
+                                                       
+                                                        </select>
                                                     <span class="text-danger field-validation-valid" data-valmsg-for="expiry_month" data-valmsg-replace="true"></span>
                                                 </div>
+<!-- 
+                                                <div class="col-md-6">
+                                                    <input class="form-control" type="number" maxlength="2" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" data-val="true" data-val-required="The expiry month field is required." id="expiry_month"
+                                                        name="expiry_month">
+                                                    <span class="text-danger field-validation-valid" data-valmsg-for="expiry_month" data-valmsg-replace="true"></span>
+                                                </div> -->
                                             </div>
                                             <div class="form-group">
                                                 <label for="expiry_year" class="col-md-3 control-label">Expiry Year
                                                     <span class="validation">*</span>
                                                 </label>
-                                                <div class="col-md-6">
-                                                    <input class="form-control" type="number" data-val="true" data-val-required="The expiry year field is required." id="expiry_year"
+                                                <div class="col-md-3">
+                                                    <select class="form-control" data-val="true" data-val-required="The expiry year field is required." id="expiry_year"
                                                         name="expiry_year">
+                                                        {for i 2017 2022}
+                                                            <option value="{$i}">{$i}</option>
+                                                        {/for}
+                                                    </select>
                                                     <span class="text-danger field-validation-valid" data-valmsg-for="expiry_year" data-valmsg-replace="true"></span>
                                                 </div>
+
+                                                <!-- <div class="col-md-6">
+                                                    <input class="form-control" type="number" maxlength="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"data-val="true" data-val-required="The expiry year field is required." id="expiry_year"
+                                                        name="expiry_year">
+                                                    <span class="text-danger field-validation-valid" data-valmsg-for="expiry_year" data-valmsg-replace="true"></span>
+                                                </div> -->
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-md-12">

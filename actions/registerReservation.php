@@ -119,6 +119,7 @@ if (Input::exists()){
 						'check_out_actual' => NULL,
 						'adults_actual' => Input::get('adults'),
 						'children_actual' => Input::get('children'),
+						'breakfast_included' => Input::get('breakfast-included'),
 						'total_amount' => $totalAmount,
 						'deposit_amount' => $minPayable,
 						'balance_amount' => $balancePayable,

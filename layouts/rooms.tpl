@@ -38,7 +38,7 @@
     
             <td id="{$row.room_id}"><a href="./roomdetail.php?type=edit&roomId={$row.room_id}">{$row.room_id}</a></td>
             <td>{$row.room_name}</td>
-            <td>{if $row.thumbnail != ""}<img height="80" width="80" src="data:image;base64,{$row.thumbnail}"{/if}</td>
+            <td>{if $row.thumbnail != ""}<img height="80" width="80" src="data:image;base64,{$row.thumbnail}" />{/if}</td>
             <td>{$row.total_room}</td>
             <td>{$row.occupancy}</td>
             <td>{$row.size}</td>
