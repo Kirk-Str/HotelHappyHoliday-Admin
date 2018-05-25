@@ -1,5 +1,4 @@
-﻿<div class="banner-wrapper">
-
+<div class="banner-wrapper">
     <div id="mycarousal" class="carousel slide" data-ride="carousel" data-interval="6000">
         <div class="carousel-inner" role="listbox">
             <div class="item active">

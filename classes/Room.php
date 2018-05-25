@@ -68,10 +68,10 @@ class Room {
 		$_occupancy = $occupancy;
 
 		$where = null;
-		
-		$select = 'SELECT R.room_id, R.room_name, R.thumbnail, R.caption, R.occupancy, R.total_room, COALESCE(R.total_room - B.Occupied, R.total_room) AS available, R.size, R.rate, R.view';
-		
-		$table = 'room AS R LEFT JOIN (SELECT COUNT(room_id) AS Occupied, room_id FROM room_reservation WHERE (room_reservation.check_in  >= \'' . $_check_in . '\' AND room_reservation.check_in <= \'' . $_check_out . '\') OR (room_reservation.check_in <= \'' . $_check_out . '\' AND room_reservation.check_out >= \'' . $_check_out . '\') OR (room_reservation.check_in >= \'' . $_check_in . '\' AND room_reservation.check_out <= \'' . $_check_out . '\') GROUP BY room_id) AS B ON (R.room_id = B.room_id) WHERE R.occupancy >= ' . $_occupancy . ' AND COALESCE(R.total_room - B.Occupied, R.total_room) > 0' ;
+
+		$select = 'SELECT R.room_id, R.room_name, R.thumbnail, R.caption, R.occupancy, R.size, R.rate, R.view, COUNT(A.room_id) AS total_room, (COUNT(A.room_id) - COALESCE(RX.rooms, 0)) AS available_room';
+
+		$table = 'room AS R LEFT JOIN room_allocation AS A USING (room_id) LEFT JOIN (SELECT room_id, COUNT(room_id) AS rooms FROM room_reservation AS RS WHERE ((RS.check_in >= \'' . $_check_in . '\' AND RS.check_in <= \'' . $_check_out . '\') OR (RS.check_in <= \'' . $_check_in . '\' AND RS.check_out >= \'' . $_check_out . '\') OR (RS.check_out >= \'' . $_check_in . '\' AND RS.check_out <= \'' . $_check_out . '\') OR (RS.check_in >= \'' . $_check_in . '\' AND RS.check_out <= \'' . $_check_out . '\')) AND (RS.check_in_actual IS NULL OR (RS.check_in_actual IS NOT NULL AND RS.check_out_actual IS NULL))) AS RX USING (room_id) GROUP BY room_id';
 
 		$data = $this ->_db->action($select, $table);
 
@@ -83,45 +83,6 @@ class Room {
 		return false;
 	
 	}
-
-
-
-	// public function getAvailableRooms($checkIn, $checkOut, $occupancy){
-		
-	// 	$where = null;
-		
-	// 	$select = 'SELECT room.room_id, room.room_name, room.thumbnail, room.caption, room.occupancy, room.size, room.rate';
-
-	// 	$table = 'room LEFT JOIN room_reservation ON (room_reservation.room_id = room.room_id)';
-		
-	// 	$where = array(
-	// 		array('room.occupancy',  '<=',  $occupancy),
-	// 		'AND',
-	// 		array('room_reservation.room_id', 'IS ', NULL),
-	// 		'AND',
-	// 		'(',
-	// 		array('room_reservation.check_in',  '>=',  $checkIn),
-	// 		'AND',
-	// 		array('room_reservation.check_in',  '<=',  $checkOut),
-	// 		')',
-	// 		'OR',
-	// 		'(',
-	// 		array('room_reservation.check_in',  '<=',  $checkOut),
-	// 		'AND',
-	// 		array('room_reservation.check_out',  '>=',  $checkOut),
-	// 		')');
-
-	// 		$data = $this ->_db->action($select, $table, $where);
-
-	// 		if($data->count()){
-	// 			$this->_data = $data->results();
-	// 			return $this->_data;
-	// 		}
-	
-	// 		return false;
-	
-	// }
-
 
 	public function data(){
 		return $this->_data;

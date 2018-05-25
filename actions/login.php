@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '../../core/init.php';
+require_once  $_SERVER['DOCUMENT_ROOT']  . '/core/init.php';
 
 if($userType == 1){
     Redirect::to(Config::get('application_path') . 'admin/index.php');

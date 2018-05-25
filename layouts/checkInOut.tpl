@@ -8,7 +8,7 @@
         <div class="body">
             <div class="row">
                 <div class="col-md-12">
-                    <form method="POST" action="./actions/confirmation.php?requestId={$reservationId}" novalidate="novalidate">
+                    <form id="check-in-form" method="POST" action="./actions/confirmation.php?requestId={$reservationId}">
                         <input type="hidden" name="type" id="type" value="{$type}" />
                         <div class="form-horizontal">
                             <div class="text-danger validation-summary-valid" data-valmsg-summary="true">
@@ -38,25 +38,39 @@
                             <div class="form-group">
                                 <label for="actual_adults" class="col-md-3 control-label">Adults</label>
                                 <div class="col-md-2">
-                                    <input class="form-control" type="text" value="{$actualAdults}" id="actual_adults" name="actual_adults" {$disabledAdults}>
+                                    <input class="form-control" type="number" value="{$actualAdults}" id="actual_adults" name="actual_adults" data-val="true" data-val-required="The Adults field is required." 
+                                    min="1" max="6" data-val-min="Minimum 1 guest should present"
+                                    {$disabledAdults}>
+                                </div>
+                                <div class="d-block">
+                                <span class="text-danger field-validation-valid" data-valmsg-for="actual_adults" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="actual_children" class="col-md-3 control-label">Children</label>
                                 <div class="col-md-2">
-                                    <input class="form-control" type="text" value="{$actualChildren}" id="actual_children" name="actual_children" {$disabledChildren}>
+                                    <input class="form-control" type="number" value="{$actualChildren}" id="actual_children" name="actual_children" max="6" data-val-max="Minimum 6 children should present" {$disabledChildren}>
                                 </div>
+                                <div>
+                               <span class="text-danger field-validation-valid" data-valmsg-for="actual_children" data-valmsg-replace="true"></span>
+                               </div>
                             </div>
                             <div class="form-group">
                                 <label for="check_in_single" class="col-md-3 control-label">Check In</label>
                                 <div class="col-md-3">
                                     <input name="check_in_single" class="form-control" id="check_in_single" type="text" value="{$actualCheckIn}" data-val="true" data-val-required="The Check In field is required." {$requiredCheckIn} {$disabledCheckIn}/>
                                 </div>
+                                <div class="d-block">
+                                <span class="text-danger field-validation-valid" data-valmsg-for="check_in_single" data-valmsg-replace="true"></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="check_out_single" class="col-md-3 control-label">Check Out</label>
                                 <div class="col-md-3">
                                     <input name="check_out_single" data-val="true" data-val-required="The Check Out field is required." class="form-control" id="check_out_single" type="text" value="{$actualCheckOut}" {$requiredCheckOut} {$disabledCheckOut}/>
+                                </div>
+                                  <div class="d-block">
+                                <span class="text-danger field-validation-valid" data-valmsg-for="check_out_single" data-valmsg-replace="true"></span>
                                 </div>
                             </div>
                             <div class="form-group"> 
@@ -65,6 +79,38 @@
                                     <input class="form-control" type="number" id="actualStayNights" name="actualStayNights" value="{$actualNightStays}" {$disabled}>
                                 </div>
                             </div>
+                            <hr>
+
+                            {if $visibleOnCheckIn }
+
+                                <div class="form-group">
+                                    <label for="room_no" class="col-md-3 control-label">Room No.</label>
+                                    <div class="col-md-3">
+                                        <select class="form-control" name="room_no" id="room_no" data-val="true" data-val-required="The Room No. field is required.">
+
+                                        {foreach $roomList row}
+                                            <option value="{$row.room_no}">{$row.door_no}</option>
+                                        {/foreach}
+
+                                        </select>
+                                       
+                                    </div>
+                                    <div class="d-block">
+                                <span class="text-danger field-validation-valid" data-valmsg-for="room_no" data-valmsg-replace="true"></span>
+                                </div>
+                                </div>
+                            
+                            {else}
+
+                                <div class="form-group">
+                                    <label for="door_no_x" class="col-md-3 control-label">Room No.</label>
+                                    <div class="col-md-3">
+                                        <input class="form-control" type="text" id="door_no_x" name="door_no_x" value="{$doorNo}" readonly>
+                                    </div>
+                                </div>
+
+                            {/if}
+
                             <hr>
                             <div class="form-group">
                                 <label for="{$disabled}" class="col-md-3 control-label">Total Payable</label>
@@ -98,9 +144,7 @@
                                
                                 {/if}
 
-                            </div>
-
-                            
+                            </div>                            
                         </div>
                     </form>
                 </div>

@@ -48,7 +48,7 @@ class Reservation {
 			$where = array('reservation_id',  '=',  $reservationId);
 		}
 
-		$data = $this ->_db->action('SELECT user.user_id, user.email_id, user.firstname, user.lastname, user.address_line_one, user.address_line_two, user.city, user.country, user.contact_no, room_reservation.reservation_id, room_reservation.requestTimestamp, room_reservation.adults, room_reservation.children, room_reservation.check_in, room_reservation.check_out, DATEDIFF(room_reservation.check_out, room_reservation.check_in) AS nightstays, room_reservation.rate,room_reservation.adults_actual, room_reservation.children_actual, room_reservation.check_in_actual, room_reservation.check_out_actual, room_reservation.total_amount,room_reservation.deposit_amount, room_reservation.additional_amount, room_reservation.balance_amount, room_reservation.cancelled, room.room_id, room.room_name' , 'room_reservation INNER JOIN user ON (room_reservation.user_id = user.user_id) INNER JOIN room ON (room_reservation.room_id = room.room_id)', $where);
+		$data = $this ->_db->action('SELECT user.user_id, user.email_id, user.firstname, user.lastname, user.address_line_one, user.address_line_two, user.city,user.country, user.contact_no, room_reservation.reservation_id, room_reservation.requestTimestamp, room_reservation.adults, room_reservation.children, room_reservation.check_in, room_reservation.check_out, DATEDIFF(room_reservation.check_out, room_reservation.check_in) AS nightstays, room_reservation.rate,room_reservation.adults_actual, room_reservation.children_actual, room_reservation.check_in_actual, room_reservation.check_out_actual, room_reservation.total_amount,room_reservation.deposit_amount, room_reservation.additional_amount, room_reservation.balance_amount, room_reservation.cancelled, room_reservation.room_id, room.room_name, room_reservation.room_no,room_allocation.door_no' , 'room_reservation INNER JOIN user ON (room_reservation.user_id = user.user_id) LEFT JOIN room_allocation ON (room_allocation.room_id = room_reservation.room_id AND room_allocation.room_no = room_reservation.room_no) INNER JOIN room ON (room_reservation.room_id = room.room_id)', $where);
 		
 		if($data->count()){
 			$this->_data = $data->first();
@@ -59,9 +59,22 @@ class Reservation {
 
 	}
 
-	public function findAvailableRoom($roomId, $stardDate, $endDate){
+	public function listRequestExist($roomNo){
 
-		
+		$select = 'SELECT COUNT(room_reservation.reservation_id) as records';
+
+		$table = 'room_reservation';
+
+		$where = array('room_reservation.room_no',  '=',  $roomNo);
+
+		$data = $this ->_db->action($select, $table, $where);
+
+		if($data->count()){
+			$this->_data = $data->first();
+			return $this->_data;
+		}
+
+		return false;
 
 	}
 

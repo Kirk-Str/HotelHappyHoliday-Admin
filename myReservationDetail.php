@@ -1,7 +1,7 @@
 <?php
 
 // Include the main class, the rest will be automatically loaded
-require __DIR__ . '../core/init.php';
+require 'core/init.php';
 
 //Application Logic in Page
 if($userType != 2){
@@ -68,7 +68,7 @@ if($reservation->find(Input::get('requestId'), $userId)){
     $footerTemplate = new Dwoo\Template\File('./layouts/template/_footer.tpl');
     $scriptTemplate = new Dwoo\Template\File('./layouts/template/_scripts.tpl');
     $validationScriptTemplate = new Dwoo\Template\File('./layouts/template/_validationScripts.tpl');
-    $layoutTemplate = new Dwoo\Template\File('./layouts/template/_Layout.tpl');
+    $layoutTemplate = new Dwoo\Template\File('./layouts/template/_layout.tpl');
 
     // Create a data set, this data set can be reused to render multiple templates if it contains enough data to fill them all
     $myReservationDetail = new Dwoo\Data();

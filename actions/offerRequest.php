@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '../../core/init.php';
+require_once  $_SERVER['DOCUMENT_ROOT']  . '/core/init.php';
 
 if (Input::exists()){
 
@@ -54,6 +54,8 @@ if (Input::exists()){
 
 					die($e->getMessage());
 				}
+
+				Email::OfferRequestConfirmation($requestId);
 
 				Session::put('message_title', 'Offer Request');
 				Session::put('message', 'Offer Request has been sent successfully!');

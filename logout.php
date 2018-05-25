@@ -1,6 +1,7 @@
 <?php
 
-require __dir__ .'./vendor/autoload.php';
+//require __dir__ .'./vendor/autoload.php';
+require 'core/init.php';
 
 $user= new User();
 

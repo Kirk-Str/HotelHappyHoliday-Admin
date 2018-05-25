@@ -1,7 +1,8 @@
 <?php
 
 // Include the main class, the rest will be automatically loaded
-require __DIR__ . '../../core/init.php';
+require_once  $_SERVER['DOCUMENT_ROOT']  . '/core/init.php';
+//require '../../core/init.php';
 
 if($userType == 1){
     Redirect::to(Config::get('application_path') . 'admin/index.php');
@@ -49,7 +50,7 @@ if (Input::exists()){
 				$footerTemplate = new Dwoo\Template\File('../layouts/template/_footer.tpl');
 				$scriptTemplate = new Dwoo\Template\File('../layouts/template/_scripts.tpl');
 				$validationScriptTemplate = new Dwoo\Template\File('../layouts/template/_validationScripts.tpl');
-				$layoutTemplate = new Dwoo\Template\File('../layouts/template/_Layout.tpl');
+				$layoutTemplate = new Dwoo\Template\File('../layouts/template/_layout.tpl');
 			
 				// Create a data set, this data set can be reused to render multiple templates if it contains enough data to fill them all
 				$confirmationData = new Dwoo\Data();

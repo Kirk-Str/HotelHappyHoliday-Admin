@@ -1,15 +1,15 @@
 <?php
 
-require __dir__ .'../../vendor/autoload.php';
+require_once  $_SERVER['DOCUMENT_ROOT']  . '/vendor/autoload.php';
 
 if(session_status()==PHP_SESSION_NONE) session_start();
 
 $GLOBALS['config'] = array (
 			'mysql' => array(
-					'host' => '127.0.0.1',
+					'host' => 'localhost',
 					'username' => 'root',
 					'password' => '',
-					'db' => 'hhdb'
+					'db' => 'resort'
 			),
 			'remember' => array(
 					'cookie_name' => 'hash',
@@ -19,7 +19,8 @@ $GLOBALS['config'] = array (
 					'session_name' => 'user',
 					'token_name' => 'token'
 			),
-			'application_path' => 'http://localhost/hh/'
+			'application_path' => '/',
+			'sender_email' => 'noreply@happyholiday.ezyro.com',
 	);
 
 if(Cookie::exists(Config::get('remember/cookie_name')) && !Session::exists(Config::get('session/session_name'))){

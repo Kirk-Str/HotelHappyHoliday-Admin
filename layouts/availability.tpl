@@ -81,11 +81,19 @@
                                     </td>
                                 </tr> -->
 
-                                {if $val.available <= 2}
+                                {if $val.available_room == 0}
+
+                                   <tr>
+                                        <td colspan="2">
+                                            <label name="warning-label" class="text-danger">No rooms available!</label>
+                                        </td>
+                                    </tr>
+
+                                {elseif $val.available_room <= 2}
 
                                     <tr>
                                         <td colspan="2">
-                                            <label name="warning-label" class="text-danger">Only {$val.available}(s) left!</label>
+                                            <label name="warning-label" class="text-danger">Only {$val.available_room}(s) Room left!</label>
                                         </td>
                                     </tr>
 
@@ -107,9 +115,15 @@
                                 </tr> -->
                             </table>
                         </div>
-                        <div class="col-md-12">
-                            <button type="submit" class="btn btn-block btn-lg btn-submit pull-right" style="width: 200px;">Select</button>
-                        </div>
+
+                        {if $val.available_room != 0}
+
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-block btn-lg btn-submit pull-right" style="width: 200px;">Select</button>
+                            </div>
+
+                        {/if}
+
                     </div>
                     <div class="col-md-4 col-md-pull-8">
                         {if $val.thumbnail != ""}<img class="featurette-image img-responsive center-block" src="data:image;base64,{$val.thumbnail}" data-holder-rendered="true"/>{/if}

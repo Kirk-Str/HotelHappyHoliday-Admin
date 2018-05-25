@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -31,14 +31,15 @@
                     
                     {if $userType == 1}
                      
-                        <li><a href="<?php echo Config::get('application_path') . 'admin/index.php?dashboard=new'; ?>">DASHBOARD</a></li>
+                        <li><a href="<?php echo Config::get('application_path') . 'admin/index.php?dashboard=opt-filter-new'; ?>">DASHBOARD</a></li>
                         <li><a href="<?php echo Config::get('application_path') . 'admin/confirmationList.php?type=opt-filter-occupied'; ?>">ROOM RESERVATIONS</a></li>
-                        <li><a href="<?php echo Config::get('application_path') . 'admin/RequestList.php?type=opt-filter-new'; ?>">OFFER REQUESTS</a></li>
+                        <li><a href="<?php echo Config::get('application_path') . 'admin/requestList.php?type=opt-filter-new'; ?>">OFFER REQUESTS</a></li>
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">MASTERS<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?php echo Config::get('application_path') . 'admin/rooms.php'; ?>">ROOMS</a></li>
+                                <li><a href="<?php echo Config::get('application_path') . 'admin/roomTypes.php'; ?>">ROOM TYPES</a></li>
+                                <li><a href="<?php echo Config::get('application_path') . 'admin/roomsOverview.php'; ?>">ROOM OVERVIEW</a></li>
                                 <li><a href="<?php echo Config::get('application_path') . 'admin/offers.php'; ?>">OFFERS</a></li>
                                 <li role="presentation" class="divider"></li>
                                 <li><a href="<?php echo Config::get('application_path') . 'admin/users.php?type=opt-filter-all'; ?>">USERS</a></li>
@@ -77,7 +78,7 @@
                                                     {$username}
                                                 </div>
                                                 <div class="form-group button">
-                                                    {if $userType == 2}<div class="help-block text-right"><a href="./myreservations.php?type=opt-filter-new">My Reservations</a></div>{/if}
+                                                    {if $userType == 2}<div class="help-block text-right"><a href="./myReservations.php?type=opt-filter-new">My Reservations</a></div>{/if}
                                                     <div class="help-block text-right"><a href="">Change Password</a></div>
                                                     <div class="help-block text-right">
                                                         <a href="<?php echo Config::get('application_path') . 'logout.php' ?>">Log Out</a>
@@ -116,7 +117,7 @@
                                             </div>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" id="remember_me" name="remember_me"> keep me logged-in
+                                                    <input type="checkbox" id="remember_me" name="remember_me" value="keep me logged-in">
                                                 </label>
                                             </div>
                                             <input type="hidden" name="token" value="<?php echo Token::generate();?>">

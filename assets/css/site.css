@@ -359,8 +359,8 @@ input[name="daterange"]{
     height: 100px;
 }
 
-.card > .btn{
-}
+/* .card > .btn{
+} */
 
 
 .featurette-image{
@@ -368,8 +368,44 @@ input[name="daterange"]{
 }
 
 #feature {
-    background: #f2f2f2;
+    background: #c0abab;
     padding-bottom: 40px;
+}
+
+#room-overview{
+    margin:0 !important;
+}
+
+#room-overview .thumbnail{
+    margin: 2px 2px !important;
+    cursor: pointer;
+}
+
+#room-overview > .close{
+    line-height: -1 !important;
+}
+
+#room-overview h3{
+    font-size: 30px;
+    font-weight: bold;
+    color: rgb(94, 94, 94);
+    font-family: "OpenSans",Georgia, serif;
+}
+
+#room-overview .lead{
+    font-size: 18px;
+    font-family: "OpenSansB",Georgia, serif !important;
+    margin: 0;
+    color: rgb(150, 150, 150);
+}
+
+#room-overview button{
+    font-size: 12px;
+    margin: 0 4px 0 0;
+}
+
+#room-overview a:hover{
+    text-decoration: #3b5998 !important;
 }
 
 p.para{
@@ -480,7 +516,7 @@ Tables & Styles
 */
 
 table tr{
-    cursor: hand;
+    cursor: pointer;
 }
 
 

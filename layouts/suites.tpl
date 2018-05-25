@@ -1,4 +1,4 @@
-﻿<h2 class="wow fadeInDown">
+<h2 class="wow fadeInDown">
     HOLIDAY'S SUITES&trade;
 </h2>
 <p class="para-b wow fadeInDown">

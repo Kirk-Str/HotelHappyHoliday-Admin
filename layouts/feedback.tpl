@@ -1,4 +1,4 @@
-﻿<h2 class="text-center">"Share Us Your Awesome Experience"</h2>
+<h2 class="text-center">"Share Us Your Awesome Experience"</h2>
 <h3 class="text-center">
     Please write something for us so that we can make sure that you happy with our dedicated service!
 </h3>

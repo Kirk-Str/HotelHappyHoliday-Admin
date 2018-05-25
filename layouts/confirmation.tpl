@@ -97,7 +97,7 @@
                                 </label>
                                 <div class="col-md-6">
                                     <input class="form-control" type="email" data-val="true" data-val-email="The Email field is not a valid e-mail address."
-                                        data-val-required="The Email field is required." id="email_id" name="email_id" value="{$emailId}"
+                                        data-val-required="The Email field is required." id="email_id" name="email_id" minlength="5" maxlength="50"  value="{$emailId}"
                                         {$disabled}>
                                     <span class="text-danger field-validation-valid" data-valmsg-for="email_id" data-valmsg-replace="true"></span>
                                 </div>
@@ -107,7 +107,7 @@
                                     <span class="validation">*</span>
                                 </label>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" value="{$firstname}" data-val="true" data-val-required="The Firstname field is required."
+                                    <input class="form-control" type="text" value="{$firstname}" data-val="true" data-val-required="The Firstname field is required." minlength="2" maxlength="50" 
                                         id="firstname" name="firstname" {$disabled}>
                                     <span class="text-danger field-validation-valid" data-valmsg-for="firstname" data-valmsg-replace="true"></span>
                                 </div>
@@ -117,7 +117,7 @@
                                     <span class="validation">*</span>
                                 </label>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" value="{$lastname}" data-val="true" data-val-required="The Lastname field is required."
+                                    <input class="form-control" type="text" value="{$lastname}" data-val="true" minlength="2" maxlength="50" data-val-required="The Lastname field is required."
                                         id="lastname" name="lastname" {$disabled}>
                                     <span class="text-danger field-validation-valid" data-valmsg-for="lastname" data-valmsg-replace="true"></span>
                                 </div>
@@ -125,7 +125,7 @@
                             <div class="form-group">
                                 <label for="address_line_one" class="col-md-3 control-label">Address 1</label>
                                 <div class="col-md-6">
-                                    <textarea class="form-control" type="text" rows="2" data-val="false" data-val-required="The Address 1 field is required."
+                                    <textarea class="form-control" type="text" rows="2" data-val="false" maxlength="100" data-val-required="The Address 1 field is required." 
                                         id="address_line_one" name="address_line_one" {$disabled}>{$addressLineOne}</textarea>
                                     <span class="text-danger field-validation-valid" data-valmsg-for="address" data-valmsg-replace="true"></span>
                                 </div>
@@ -133,7 +133,7 @@
                             <div class="form-group">
                                 <label for="address_line_two" class="col-md-3 control-label">Address 2</label>
                                 <div class="col-md-6">
-                                    <textarea class="form-control" type="text" rows="2" data-val="false" data-val-required="The Address 2 field is required."
+                                    <textarea class="form-control" type="text" rows="2" data-val="false" maxlength="100" data-val-required="The Address 2 field is required."
                                         id="address_line_two" name="address_line_two" {$disabled}>{$addressLineTwo}</textarea>
                                     <span class="text-danger field-validation-valid" data-valmsg-for="address_line_two" data-valmsg-replace="true"></span>
                                 </div>
@@ -141,7 +141,7 @@
                             <div class="form-group">
                                 <label for="city" class="col-md-3 control-label">City</label>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" value="{$city}" data-val="false" data-val-required="The City field is required."
+                                    <input class="form-control" type="text" value="{$city}" data-val="false" maxlength="50" data-val-required="The City field is required."
                                         id="city" name="city" {$disabled}>
                                     <span class="text-danger field-validation-valid" data-valmsg-for="city" data-valmsg-replace="true"></span>
                                 </div>
@@ -151,7 +151,9 @@
                                     <span class="validation">*</span>
                                 </label>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" value="{$country}" data-val="true" data-val-required="The Country field is required."
+                                    <input class="form-control" type="text" value="{$country}" data-val="true" 
+                                    minlength="2" maxlength="50"
+                                    data-val-required="The Country field is required."
                                         id="country" name="country" {$disabled}>
                                     <span class="text-danger field-validation-valid" data-valmsg-for="country" data-valmsg-replace="true"></span>
                                 </div>
@@ -161,7 +163,7 @@
                                     <span class="validation">*</span>
                                 </label>
                                 <div class="col-md-6">
-                                    <input class="form-control" type="text" value="{$contactNo}" data-val="true" data-val-required="The Contact No field is required."
+                                    <input class="form-control" type="text" value="{$contactNo}" data-val="true" minlength="2" maxlength="50" data-val-required="The Contact No field is required." 
                                         id="contact_no" name="contact_no" {$disabled}>
                                     <span class="text-danger field-validation-valid" data-valmsg-for="contact_no" data-valmsg-replace="true"></span>
                                 </div>
@@ -192,7 +194,7 @@
                                                     <span class="validation">*</span>
                                                 </label>
                                                 <div class="col-md-6">
-                                                    <input class="form-control" type="text" data-val="true" data-val-required="The card holders name field is required." id="card_holders_name"
+                                                    <input class="form-control" type="text" data-val="true" data-val-required="The card holders name field is required." id="card_holders_name" minlength="2" maxlength="50"
                                                         name="card_holders_name">
                                                     <span class="text-danger field-validation-valid" data-valmsg-for="card_holders_name" data-valmsg-replace="true"></span>
                                                 </div>
@@ -202,8 +204,13 @@
                                                     <span class="validation">*</span>
                                                 </label>
                                                 <div class="col-md-6">
-                                                    <input class="form-control" type="number" maxlength="16" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" data-val="true" data-val-required="The Card No field is required." id="card_no"
+                                                    <input class="form-control" type="number" data-val="true" minlength="16" maxlength="16" data-val-required="The Card No field is required." id="card_no"
                                                         name="card_no">
+
+                                                        <!-- This JS is to restrict upto 16 char
+                                                            
+                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" data-val="true"  -->
+
                                                     <span class="text-danger field-validation-valid" data-valmsg-for="card_no" data-valmsg-replace="true"></span>
                                                 </div>
                                             </div>

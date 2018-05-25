@@ -1,6 +1,8 @@
 <?php
 
-require  __DIR__ . '../../vendor/autoload.php';
+require_once  $_SERVER['DOCUMENT_ROOT']  . '/core/init.php';
+//require '../../core/init.php';
+//require  '../../vendor/autoload.php';
 
 if (Input::exists()){
 
@@ -93,6 +95,8 @@ if (Input::exists()){
 
 			$remember = true;
 
+			$userId = '';
+
 			$user = new User();
 
 			$image = $_FILES['avatar-image']['tmp_name'];
@@ -110,7 +114,7 @@ if (Input::exists()){
 
 					$salt = Hash::salt(32);
 
-					$user->create(array(
+					$userId = $user->create(array(
 						'email_id' => Input::get('email_id'),
 						'password' => Hash::make(Input::get('password'), $salt),
 						'salt' => $salt,
@@ -132,7 +136,7 @@ if (Input::exists()){
 
 					$row = $user->find($emailId);
 
-					$user->update(array(
+					$userId = $user->update(array(
 						'password' => Hash::make(Input::get('password'), $row->salt),
 						'avatar_image' => $imgContent,
 						'firstname' => Input::get('firstname'),
@@ -155,7 +159,9 @@ if (Input::exists()){
 			$login = $user->login(Input::get('email_id'), Input::get('password'), $remember);
 			if ($login){
 
-				//Redirect::to('../index.php'); 
+		
+				Email::UserAccountRegistrationConfirmation($userId);
+
 				Session::put('message_title', 'Welcome to Hotel Happy Holiday');
 				Session::put('message', 'Welcome to Hotel Happy Holiday, ' . Input::get('firstname') . ' ' . Input::get('lastname'));
 				Session::put('sub_message', ' Enjoy our premium services via loyalty membership program.');

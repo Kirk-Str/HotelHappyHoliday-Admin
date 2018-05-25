@@ -1,4 +1,4 @@
-﻿<h2 class="wow fadeInDown">
+<h2 class="wow fadeInDown">
     HOLIDAYS LOYALITY&trade;
 </h2>
 <p class="para-b wow fadeInDown">
@@ -7,7 +7,7 @@
 </p>
 
 <div class="jumbotron jstyle j-loyality wow fadeInDown">
-    @*<h2>LOYALITY</h2>*@
+   
 </div>
 
 

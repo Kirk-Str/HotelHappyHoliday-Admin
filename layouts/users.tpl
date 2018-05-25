@@ -1,6 +1,5 @@
 <form class="form form-inline" method="POST" action="." >
     <h3 class="inline-block">USERS</h3>
-
     <div class="form-group pull-right" style="margin-top:30px;">
         <label class="radio-inline" style="margin-right:20px;">
             <input type="radio" onclick=location.href="<?php echo $_SERVER['PHP_SELF'] . '?type=opt-filter-all'; ?>" name="opt-filter" id="opt-filter-all" <?php if (($_GET['type']) == "opt-filter-all") { echo 'checked=checked'; } ?>>All Users   

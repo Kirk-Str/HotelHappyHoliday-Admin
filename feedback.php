@@ -10,7 +10,7 @@
 
     $scripts = new Template("layouts/template/_scripts.tpl");
 
-    $layout = new Template("layouts/template/_Layout.tpl");
+    $layout = new Template("layouts/template/_layout.tpl");
 
     $layout->set("title", "Feedback");
 

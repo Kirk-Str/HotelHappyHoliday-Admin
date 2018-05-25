@@ -1,4 +1,4 @@
-﻿<div class="explore-more wow fadeInDown">
+<div class="explore-more wow fadeInDown">
     <h2>EXPLORE THE SURROUNDINGS!</h2>
 </div>
     <div class="text-center explore-more wow fadeInDown">

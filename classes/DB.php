@@ -145,34 +145,79 @@ class DB{
 		return false;
 	}
 
-	public function update($table, $id, $fields){
-		$set = '';
-		$x = 1;
+	public function update($table, $where, $fields){
 
-		if(is_array($id)){
-			
-			$updateRecordField = key($id);
-			$updateRecordValue = current($id);
+		$x = 1;
+		$set = '';
+		$whereParam = '';
+		$param = array();
+		
+		if(is_array($where[0])){
+
+			foreach($fields as $name => $value){
+				$set .= "{$name} = ?";
+				if($x < count($fields)){
+					$set .= ', ';
+				}
+				$x++;
+
+				array_push($param, $value);
+
+			}
+
+			foreach($where as $args){
+
+				if(!is_array($args)){
+
+					$whereParam .= ' ' . $args . ' ';
+
+				}else{
+
+					$whereParam .= $args[0] . ' ' . $args[1] . ' ? ';
+					
+					array_push($param, $args[2]);
+
+				}
+
+			}
+
+			$sql = "UPDATE {$table} SET {$set} WHERE {$whereParam}";
 
 		}else{
 
-			$updateRecordField = 'id';
-			$updateRecordValue = $id;
-			
+			if(is_array($where)){
+
+				$updateRecordField = key($where);
+				$updateRecordValue = current($where);
+
+			}else{
+
+				$updateRecordField = 'id';
+				$updateRecordValue = $id;
+
+			}				
+
+				foreach($fields as $name => $value){
+					$set .= "{$name} = ?";
+					if($x < count($fields)){
+						$set .= ', ';
+					}
+					$x++;
+
+					array_push($param, $value);
+
+				}
+
+				$sql = "UPDATE {$table} SET {$set} WHERE {$updateRecordField} = {$updateRecordValue}";
+
 		}
-	
-		foreach($fields as $name => $value){
-			$set .= "{$name} = ?";
-			if($x < count($fields)){
-				$set .= ', ';
-			}
-			$x++;
-		}
-		$sql = "UPDATE {$table} SET {$set} WHERE {$updateRecordField} = {$updateRecordValue}";
-		if(!$this->query($sql, $fields)->error()){
+
+		if(!$this->query($sql, $param)->error()){
 			return true;
 		}
+
 		return false;
+
 	}
 
 

@@ -15,6 +15,8 @@ if (Input::exists()){
 			$validation = '';
 
 			$reservation = new Reservation();
+			$roomAllocation = new RoomAllocation();
+			
 			$reservationStatus = 0;
 
 			if($reservation->find($reservationId)){
@@ -27,6 +29,7 @@ if (Input::exists()){
 					$reservationStatus = 2;
 				}
 
+				//Cancel Val Function
 				if(Input::get('action') == 'Cancel'){
 
 					$validation = $validate->check($_POST,array(
@@ -35,6 +38,7 @@ if (Input::exists()){
 						),
 					)); 
 
+				//Check-In Val Function
 				}else if($reservationStatus == 1){
 
 					$validation = $validate->check($_POST,array(
@@ -44,8 +48,12 @@ if (Input::exists()){
 						'check_in_single' => array(
 							'required' => true
 						),
+						'room_no' => array(
+							'required' => true
+						),
 					)); 
 
+				//Check-Out Val Function
 				}else if($reservationStatus == 2){
 					
 
@@ -64,6 +72,7 @@ if (Input::exists()){
 
 					try{
 
+						//Cancel Val Function
 						if(Input::get('action') == 'Cancel'){
 
 							$reservation->update(array(
@@ -71,27 +80,41 @@ if (Input::exists()){
 							), array('reservation_id' => $reservationId));
 
 						}
+
+						//Check-In Val Function
 						else if(Input::get('type') == "0")
 						{
 
+							//Updating Occupied Room Record
+							$roomAllocation->update(
+								array(
+									'room_status' => 2), 
+								array(
+									array('room_no', '=', Input::get('room_no')),
+									'AND',
+									array('room_id', '=', $reservation->data()->room_id)));
+
+							//Updating Reservation Record
 							$reservation->update(array(
 								'adults_actual' => Input::get('actual_adults'),
 								'children_actual' => Input::get('actual_children') ?? NULL,
 								'check_in_actual' => Input::get('check_in_single'),
+								'room_no' => Input::get('room_no'),
 							), array('reservation_id' => $reservationId));
 
 						}
+						
+						//Check-Out Val Function
 						else if(Input::get('type') == "1")
 						{
-
-							
-							$additionalAmount = Input::get('additional-charges');
-							$totalBalanceToBePaid = $balance + $additionalAmount;
 
 							$actualCheckOut = Input::get('check_out_single');
 							$totalAmount = $reservation->data()->total_amount;
 							$roomRate = $reservation->data()->rate;
 							$balancePayable = $reservation->data()->balance_amount;
+
+							$additionalAmount = Input::get('additional-charges');
+							$totalBalanceToBePaid = $balancePayable + $additionalAmount;
 
 							$checkIn = new DateTime($reservation->data()->check_in);
 							$checkOut = new DateTime($reservation->data()->check_out);
@@ -113,13 +136,25 @@ if (Input::exists()){
 					
 							}
 
+							//Updating Occupied Room Record
+							$roomAllocation->update(
+								array(
+									'room_status' => 3), 
+								array(
+									array('room_no', '=', $reservation->data()->room_no),
+									'AND',
+									array('room_id', '=', $reservation->data()->room_id)));
 
+
+							//Updating Reservation Record
 							$reservation->update(array(
 								'check_out_actual' => Input::get('check_out_single'),
 								'additional_amount' => $additionalAmount,
 								'balance_amount' => $balanceAmount,
 								'check_out_datetime' => $checkoutDateTime,
 							), array('reservation_id' => $reservationId));
+	
+							Email::RoomCheckoutAndBilling($reservationId);
 
 						}
 
@@ -136,13 +171,6 @@ if (Input::exists()){
 
 					Redirect::to(Config::get('application_path') . 'admin/confirmation.php?requestId=' . $reservationId);
 
-					// if(Input::get('type') == "0"){
-					// 	Redirect::to(Config::get('application_path') . 'admin/confirmationList.php?type=opt-filter-occupied');
-					// }else{
-					// 	Redirect::to(Config::get('application_path') . 'admin/confirmationList.php?type=opt-filter-left');
-					// }
-				
-
 				} else {
 					
 					foreach($validation->errors() as $error){
@@ -154,7 +182,7 @@ if (Input::exists()){
 					Session::put('message_title', 'There seems to be a problem :(');
 					Session::put('message', 'There seems to be a problem :(');
 					Session::put('sub_message', $error);
-					Redirect::to('../message.php');
+					Redirect::to(Config::get('application_path') . 'message.php');
 
 				}
 		//}
@@ -164,7 +192,7 @@ if (Input::exists()){
 			Session::put('message', 'Oops!');
 			Session::put('sub_message', '404 or whatever, Page not available.');
 		
-			Redirect::to('../message.php');
+			Redirect::to(Config::get('application_path') . 'message.php');
 
 		}
 

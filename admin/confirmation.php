@@ -1,7 +1,7 @@
 <?php
 
 // Include the main class, the rest will be automatically loaded
-require __DIR__ . '../../core/init.php';
+require_once  $_SERVER['DOCUMENT_ROOT']  . '/core/init.php';
 
 //Application Logic in Page
 if($userType != 1 || empty($_GET)){
@@ -22,6 +22,8 @@ $adults = "";
 $children = "";
 $guests = "";
 $type = 0;
+$rows;
+$visibleOnCheckIn = false;
 
 $reservation = new Reservation();
 
@@ -44,6 +46,7 @@ if($reservation->find(Input::get('requestId'))){
     
     $nightStay = $checkOut->diff($checkIn)->format('%a')+1;
     $roomId = $reservation->data()->room_id;
+    $doorNo = $reservation->data()->door_no;
     $roomSelected = $reservation->data()->room_name;
     $roomRate = $reservation->data()->rate;
 
@@ -95,16 +98,22 @@ if($reservation->find(Input::get('requestId'))){
         $inputBlockStyle = 'block-active';
         $inputHeaderStyle = 'header-active';
 
+        //Room Check-In Function
         if(empty($reservation->data()->check_in_actual)){
 
+            $visibleOnCheckIn = true;
             $formHeader = 'Reservation - Check-In';
 
             $disabledCheckOut = 'disabled=disabled';
             $disabledAdditionalCharges = 'disabled=disabled';
             $checkActionButton = 'Check In';
 
+            $roomAllocation = new RoomAllocation();
+            $rows = $roomAllocation->availableRooms($roomId);
+
         }
 
+        //Room Check-Out Function
         if(!empty($reservation->data()->check_in_actual)){
 
             $formHeader = 'Reservation - Check-Out';
@@ -158,7 +167,6 @@ if($reservation->find(Input::get('requestId'))){
         }
 }
 
-
     // Create the controller, it is reusable and can render multiple templates
     $core = new Dwoo\Core();
 
@@ -167,7 +175,7 @@ if($reservation->find(Input::get('requestId'))){
     $footerTemplate = new Dwoo\Template\File('../layouts/template/_footer.tpl');
     $scriptTemplate = new Dwoo\Template\File('../layouts/template/_scripts.tpl');
     $validationScriptTemplate = new Dwoo\Template\File('../layouts/template/_validationScripts.tpl');
-    $layoutTemplate = new Dwoo\Template\File('../layouts/template/_Layout.tpl');
+    $layoutTemplate = new Dwoo\Template\File('../layouts/template/_layout.tpl');
 
     // Create a data set, this data set can be reused to render multiple templates if it contains enough data to fill them all
     $confirmationData = new Dwoo\Data();
@@ -187,6 +195,7 @@ if($reservation->find(Input::get('requestId'))){
     $confirmationData->assign('roomSelected', $roomSelected);
     $confirmationData->assign('roomRate', number_format($roomRate, 2));
     $confirmationData->assign('roomId', $roomId);
+    $confirmationData->assign('doorNo', $doorNo);
 
     $confirmationData->assign('totalAmount', number_format($totalAmount, 2));
     $confirmationData->assign('minPayable', number_format($minPayable, 2));
@@ -216,6 +225,14 @@ if($reservation->find(Input::get('requestId'))){
     $confirmationData->assign('disabledAdditionalCharges', $disabledAdditionalCharges);
     $confirmationData->assign('checkActionButton', $checkActionButton);
     $confirmationData->assign('cancelled', $cancelled);
+
+    $confirmationData->assign('visibleOnCheckIn', $visibleOnCheckIn);
+    if($visibleOnCheckIn){
+        $confirmationData->assign('roomList', objectToArray($rows));
+    }else{
+        $confirmationData->assign('doorNo', $reservation->data()->door_no);
+    }
+    
 
     $validationScriptPage = new Dwoo\Data();
     $validationScriptPage->assign('validationScripts', $core->get($validationScriptTemplate));
